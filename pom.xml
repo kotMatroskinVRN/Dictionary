@@ -7,6 +7,18 @@
     <groupId>home.fifteen</groupId>
     <artifactId>Dictionary</artifactId>
     <version>1.0-SNAPSHOT</version>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>11</source>-->
+<!--                    <target>11</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -14,12 +26,59 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.yandex.android/disk-restapi-sdk -->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.yandex.android/disk-restapi-sdk &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.yandex.android</groupId>-->
+<!--            <artifactId>disk-restapi-sdk</artifactId>-->
+<!--            <version>1.03</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.google.api-client</groupId>-->
+<!--            <artifactId>google-api-client</artifactId>-->
+<!--            <version>1.31.5</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.api-client</groupId>-->
+<!--            <artifactId>google-api-client-java6</artifactId>-->
+<!--            <version>1.32.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.oauth-client</groupId>-->
+<!--            <artifactId>google-oauth-client-jetty</artifactId>-->
+<!--            <version>1.22.0</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.google.apis/google-api-services-appsactivity &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.apis</groupId>-->
+<!--            <artifactId>google-api-services-appsactivity</artifactId>-->
+<!--            <version>v1-rev394-1.25.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.apis</groupId>-->
+<!--            <artifactId>google-api-services-drive</artifactId>-->
+<!--            <version>v3-rev20220214-1.32.1</version>-->
+<!--        </dependency>-->
+
         <dependency>
-            <groupId>com.yandex.android</groupId>
-            <artifactId>disk-restapi-sdk</artifactId>
-            <version>1.03</version>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>16</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>16</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>16</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>
