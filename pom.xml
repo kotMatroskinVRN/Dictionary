@@ -33,21 +33,21 @@
 <!--            <version>1.03</version>-->
 <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>com.google.api-client</groupId>-->
-<!--            <artifactId>google-api-client</artifactId>-->
-<!--            <version>1.31.5</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.google.api-client</groupId>-->
-<!--            <artifactId>google-api-client-java6</artifactId>-->
-<!--            <version>1.32.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.google.oauth-client</groupId>-->
-<!--            <artifactId>google-oauth-client-jetty</artifactId>-->
-<!--            <version>1.22.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.31.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client-java6</artifactId>
+            <version>1.32.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.22.0</version>
+        </dependency>
 
 <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.google.apis/google-api-services-appsactivity &ndash;&gt;-->
 <!--        <dependency>-->
@@ -55,11 +55,11 @@
 <!--            <artifactId>google-api-services-appsactivity</artifactId>-->
 <!--            <version>v1-rev394-1.25.0</version>-->
 <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.google.apis</groupId>-->
-<!--            <artifactId>google-api-services-drive</artifactId>-->
-<!--            <version>v3-rev20220214-1.32.1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-drive</artifactId>
+            <version>v3-rev20220214-1.32.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.openjfx</groupId>

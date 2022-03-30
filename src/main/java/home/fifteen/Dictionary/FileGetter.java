@@ -9,7 +9,7 @@ public class FileGetter implements DictionaryGetter{
     }
 
     @Override
-    public Map<String,String> getDictionary() {
+    public Dictionary getDictionary() {
         return null;
     }
 }
