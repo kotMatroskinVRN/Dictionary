@@ -1,4 +1,4 @@
-package home.fifteen.Dictionary;
+package home.fifteen.dictionary.dictionary;
 
 import java.io.*;
 import java.net.URL;
@@ -21,25 +21,30 @@ import com.google.api.services.drive.model.File;
 
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.DictionaryGetter;
 
 
-public class GoogleDriveDefault implements DictionaryGetter{
+public class GoogleDriveDefault implements DictionaryGetter {
 
-    private final String URL_NAME = "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=";
-    private final String FILE_ID  = "1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz";
-    private final String APPLICATION_NAME = "learning";
-    private final String CREDENTIALS_FILE_PATH = "client_secret.json";
+    private final String FILE_ID  ;
     private final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_METADATA_READONLY);
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
+
+
 
     private final Dictionary dictionary;
     private File file ;
 
     public GoogleDriveDefault() {
         dictionary = new Dictionary();
+        FILE_ID  = "1E36Ch6rdHsEeg4J7d0--X2qiy1tinIcY";
+//        FILE_ID  = "1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz";
     }
 
+    public GoogleDriveDefault(String FILE_ID) {
+        dictionary = new Dictionary();
+        this.FILE_ID = FILE_ID;
+    }
 
 
 
@@ -47,14 +52,15 @@ public class GoogleDriveDefault implements DictionaryGetter{
     public void init() {
 
         try {
-        URL url = new URL(URL_NAME + FILE_ID);
+            String URL_NAME = "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=";
+            URL url = new URL(URL_NAME + FILE_ID);
 
         InputStream is = url.openStream();
 
-        while (is==null){
-            Thread.sleep(50);
-            System.out.println("sleeping...");
-        }
+//        while (is==null){
+//            Thread.sleep(50);
+//            System.out.println("sleeping...");
+//        }
 
         PropertyResourceBundle prb = new PropertyResourceBundle(is);
 
@@ -63,7 +69,8 @@ public class GoogleDriveDefault implements DictionaryGetter{
         }
 
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            String APPLICATION_NAME = "learning";
+            Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
@@ -75,7 +82,7 @@ public class GoogleDriveDefault implements DictionaryGetter{
 //            downloadFileToPRB( service , FILE_ID);
 
 
-        } catch (IOException | InterruptedException | GeneralSecurityException e) {
+        } catch (IOException  | GeneralSecurityException e) {
             e.printStackTrace();
         }
     }
@@ -85,18 +92,19 @@ public class GoogleDriveDefault implements DictionaryGetter{
         return dictionary;
     }
 
-    private String parseKey(String key){
-        return key.replaceAll("\\." , " ");
-    }
+
 
     @Override
     public String toString() {
         return dictionary.toString();
     }
 
-    private void setDictionaryName(){
+    @Override
+    public void setDictionaryName(){
             dictionary.setName(file.getName());
     }
+
+
 
     private void printFile() {
             System.out.println("Title: " + file.getName());
@@ -106,13 +114,17 @@ public class GoogleDriveDefault implements DictionaryGetter{
 
     private Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
+        String CREDENTIALS_FILE_PATH = "client_secret.json";
         InputStream in = ClassLoader.getSystemResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
+
         // Build flow and trigger user authorization request.
+        List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_METADATA_READONLY);
+        String TOKENS_DIRECTORY_PATH = "tokens";
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
@@ -123,30 +135,30 @@ public class GoogleDriveDefault implements DictionaryGetter{
         //returns an authorized Credential object.
         return credential;
     }
-
-    private void downloadFileToPRB(Drive service, String fileId) {
-        InputStream inputStream ;
-        try {
-            OutputStream outputStream = new ByteArrayOutputStream();
-            service.files().export(fileId, "text/plain")
-                    .executeMediaAndDownloadTo(outputStream);
-            inputStream = new ByteArrayInputStream(((ByteArrayOutputStream) outputStream).toByteArray());
-//            inputStream = service.files()
-//                    .export(fileId, "text/plain")
-//                    .executeMediaAsInputStream();
-            PropertyResourceBundle prb = new PropertyResourceBundle(inputStream);
-
-            for (String key : prb.keySet()) {
-                System.out.println(key);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
+//
+//    private void downloadFileToPRB(Drive service, String fileId) {
+//        InputStream inputStream ;
+//        try {
+//            OutputStream outputStream = new ByteArrayOutputStream();
+//            service.files().export(fileId, "text/plain")
+//                    .executeMediaAndDownloadTo(outputStream);
+//            inputStream = new ByteArrayInputStream(((ByteArrayOutputStream) outputStream).toByteArray());
+////            inputStream = service.files()
+////                    .export(fileId, "text/plain")
+////                    .executeMediaAsInputStream();
+//            PropertyResourceBundle prb = new PropertyResourceBundle(inputStream);
+//
+//            for (String key : prb.keySet()) {
+//                System.out.println(key);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//
+//
+//    }
 
 //    private InputStream downloadFile(Drive service, File file) {
 //

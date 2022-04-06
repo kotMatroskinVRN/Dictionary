@@ -1,4 +1,4 @@
-package home.fifteen;
+package home.fifteen.dictionary;
 
 import java.io.IOException;
 import java.net.URL;

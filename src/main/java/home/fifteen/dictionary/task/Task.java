@@ -1,47 +1,46 @@
-package home.fifteen.Dictionary;
+package home.fifteen.dictionary.task;
+
+import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.Main;
 
 import java.util.*;
+import java.util.logging.Logger;
 
-public class Dictionary {
+public class Task {
+
+    private Logger log = Main.getLog();
 
     private final Map<String,String> words = new HashMap<>();
     private final List<String> answers = new ArrayList<>();
 
     private String task ;
-    private String name ;
 
 
-    public void addWord(String word , String description){
-        words.put( word,description );
-    }
+    public void addDictionary(Dictionary dictionary){
+        for(String key : dictionary.getWords().keySet()){
+            if(words.containsKey(key)){
+                log.warning(
+                        String.format("word %s exists with meaning %s. Will be skipped" , key , words.get(key) )
+                );
+            }else {
+                words.put(key, dictionary.getWords().get(key));
+            }
+        }
 
-    public Map<String, String> getWords() {
-        return words;
     }
 
     public void prepareTask(){
         task = getRandomWord();
         makeAnswers();
     }
-
     public String getTask(){
         return task;
     }
-
     public List<String> getAnswers(){
         return answers;
     }
-
     public boolean checkAnswer(String description){
         return words.get(task).equals(description);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     private void makeAnswers(){
@@ -66,7 +65,7 @@ public class Dictionary {
     }
 
     private String getRandomWord(){
-        int number = (int)(Math.random()*words.size())+1;
+        int number = (int)(Math.random()*words.size());
         ArrayList<String> keys = new ArrayList(words.keySet());
         return keys.get(number);
 
@@ -74,15 +73,17 @@ public class Dictionary {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder(name + " :\n");
+        StringBuilder result = new StringBuilder(task);
+        result.append("\n");
         String format = "%-40s%s\n";
 
-        for (String key : words.keySet()) {
-            String string  = String.format(format , key , words.get(key));
+        for (String answer : answers) {
+            String string  = String.format(format , "" , answer );
             result.append(string);
         }
 
         return result.toString();
     }
+
 
 }

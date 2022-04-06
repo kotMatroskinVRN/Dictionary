@@ -1,4 +1,4 @@
-package home.fifteen.Dictionary;
+package home.fifteen.dictionary.dictionary;
 
 public class Word {
 
