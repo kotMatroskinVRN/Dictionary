@@ -14,7 +14,7 @@ public class FileGetterEncrypted implements DictionaryGetter {
 
     public FileGetterEncrypted() {
         dictionary = new Dictionary();
-        FILE_ID = "encoded_clothes.properties";
+        FILE_ID = "DictionarySource/encoded_clothes.properties";
     }
 
     public FileGetterEncrypted(String FILE_ID) {
@@ -30,6 +30,7 @@ public class FileGetterEncrypted implements DictionaryGetter {
         byte[] decodedBytes = decoder.decode(string);
         String decodedString = new String(decodedBytes);
 
+        setDictionaryName();
 
         try {
             InputStream is = new ByteArrayInputStream(decodedString.getBytes(StandardCharsets.UTF_8));

@@ -1,7 +1,5 @@
 package home.fifteen.dictionary.dictionary;
 
-import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.dictionary.DictionaryGetter;
 
 import java.io.*;
 import java.util.PropertyResourceBundle;
@@ -14,7 +12,7 @@ public class FileGetter implements DictionaryGetter {
 
     public FileGetter() {
         dictionary = new Dictionary();
-        FILE_ID = "2018.properties";
+        FILE_ID = "DictionarySource/2018.properties";
     }
 
     public FileGetter(String FILE_ID) {
@@ -31,6 +29,8 @@ public class FileGetter implements DictionaryGetter {
             for (String key : prb.keySet()) {
                 dictionary.addWord( parseKey(key) , prb.getString(key));
             }
+
+            setDictionaryName();
 
         } catch (IOException e) {
             e.printStackTrace();

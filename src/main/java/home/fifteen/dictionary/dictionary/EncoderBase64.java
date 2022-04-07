@@ -31,7 +31,7 @@ public class EncoderBase64 {
         Base64.Encoder encoder = Base64.getEncoder();
         codedText = encoder.encodeToString(string.getBytes(StandardCharsets.UTF_8));
 //        Base64.Decoder decoder = Base64.getDecoder();
-        stringTofile();
+        stringToFile();
         log.finest(codedText);
 
     }
@@ -54,7 +54,7 @@ public class EncoderBase64 {
         return "missed";
     }
 
-    private void stringTofile(){
+    private void stringToFile(){
         String outFileName = "encoded_" + fileName;
 
         try (PrintStream out = new PrintStream(new FileOutputStream(outFileName))) {
