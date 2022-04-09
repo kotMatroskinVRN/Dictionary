@@ -1,5 +1,6 @@
 package home.fifteen.dictionary.task;
 
+import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.DictionaryGetter;
 import home.fifteen.dictionary.dictionary.FileGetter;
 import home.fifteen.dictionary.dictionary.FileGetterEncrypted;
@@ -8,6 +9,7 @@ import home.fifteen.dictionary.dictionary.GoogleDriveDefault;
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public enum Sources {
 
@@ -30,6 +32,8 @@ public enum Sources {
         }
     },
     ;
+
+    private Logger log = Main.getLog();
 
     private static final Set<DictionaryGetter> getters = new HashSet<>();
 
@@ -82,7 +86,10 @@ public enum Sources {
                 line = reader.readLine();
             }
             return result.toString();
-        } catch (IOException e) { e.printStackTrace();}
+        } catch (IOException e) {
+            log.severe("File does not exist : " + fileName);
+            e.printStackTrace();
+        }
         return "missed";
     }
 
