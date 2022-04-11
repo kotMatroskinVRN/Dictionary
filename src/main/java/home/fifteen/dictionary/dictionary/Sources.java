@@ -1,10 +1,6 @@
-package home.fifteen.dictionary.task;
+package home.fifteen.dictionary.dictionary;
 
 import home.fifteen.dictionary.Main;
-import home.fifteen.dictionary.dictionary.DictionaryGetter;
-import home.fifteen.dictionary.dictionary.FileGetter;
-import home.fifteen.dictionary.dictionary.FileGetterEncrypted;
-import home.fifteen.dictionary.dictionary.GoogleDriveDefault;
 
 import java.io.*;
 import java.util.HashSet;
@@ -13,12 +9,12 @@ import java.util.logging.Logger;
 
 public enum Sources {
 
-    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt"){
-        @Override
-        DictionaryGetter getGetter(String name) {
-            return new GoogleDriveDefault(name);
-        }
-    },
+//    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt"){
+//        @Override
+//        DictionaryGetter getGetter(String name) {
+//            return new GoogleDriveDefault(name);
+//        }
+//    },
     ENCRYPTED("DictionarySource/EncryptedFiles.txt"){
         @Override
         DictionaryGetter getGetter(String name) {
@@ -52,6 +48,7 @@ public enum Sources {
             source.readSource();
         }
     }
+
 
     public void setFileName(String fileName) {
         this.fileName = fileName;

@@ -1,17 +1,25 @@
 package home.fifteen.dictionary;
 
 import home.fifteen.dictionary.dictionary.*;
-import home.fifteen.dictionary.task.Sources;
+import home.fifteen.dictionary.dictionary.Sources;
 import home.fifteen.dictionary.task.Task;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-public class Main {
+public class Main extends Application  {
 
     private final static Logger log = Logger.getLogger(ClassLoader.class.getName());
+
+    private final static String FXML = "MainWindow.fxml";
 
     public static void main(String[] args) {
 
@@ -40,11 +48,43 @@ public class Main {
             task.prepareTask();
             log.info(task.toString());
         }
-//
 
-
-
+        launch(args);
     }
+
+    @Override
+    public void start(Stage primaryStage) {
+
+        try {
+
+        Stage stage   = primaryStage;
+        FXMLLoader loader = new FXMLLoader();
+        Parent content = loader.load( ClassLoader.getSystemResourceAsStream(FXML) );
+
+
+
+        Scene scene = new Scene(content);
+
+        stage.setResizable(false);
+        stage.setScene(scene);
+//        stage.getIcons().add(
+//                new Image(
+//                        Objects.requireNonNull(
+//                                ClassLoader.getSystemResourceAsStream("icon/SeaBattle_32x32.PNG")
+//                        )
+//                )
+//        );
+
+
+
+
+        stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     private static void encodeDictionary(String fileName) {
 

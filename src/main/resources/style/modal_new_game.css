@@ -1,0 +1,28 @@
+
+BorderPane{
+    -fx-alignment: center;
+}
+
+FlowPane{
+    -fx-pref-height: 30px;
+    -fx-padding: 5px;
+    -fx-hgap: 5px;
+}
+
+FlowPane .button{
+    -fx-pref-width:  70px;
+    -fx-pref-height: 20px;
+    -fx-background-size: 100% 100%;
+    -fx-spacing: 5px;
+    /*-fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;*/
+}
+
+BorderPane .label{
+    -fx-text-alignment: center;
+    -fx-font-size:16px;
+    -fx-alignment: center;
+    -fx-max-width: Infinity;
+    -fx-font-weight:bold;
+}

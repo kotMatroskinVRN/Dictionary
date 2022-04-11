@@ -1,0 +1,45 @@
+
+#deck{
+    -fx-background-image: url("../images/style_default/deck.png");
+}
+#deck_single{
+    -fx-background-image: url("../images/style_default/deck_single.png");
+}
+#deck_front{
+    -fx-background-image: url("../images/style_default/deck_front.png");
+}
+#deck_back{
+    -fx-background-image: url("../images/style_default/deck_back.png");
+}
+
+#hit{
+    -fx-background-image: url("../images/style_default/hit.png");
+}
+#hit_deck{
+    -fx-background-image: url("../images/style_default/hit_deck.png");
+}
+#hit_back{
+    -fx-background-image: url("../images/style_default/hit_back.png");
+}
+#hit_front{
+     -fx-background-image: url("../images/style_default/hit_front.png");
+}
+
+#hit_single{
+    -fx-background-image: url("../images/style_default/hit_single.png");
+}
+
+
+#miss{
+    -fx-background-image: url("../images/style_default/miss.png");
+}
+#sea{
+    -fx-background-image: url("../images/style_default/sea.png");
+}
+
+.player.button:hover{
+    -fx-graphic: url("../images/style_default/cross.png");
+    -fx-max-height: 30;
+    -fx-max-width: 30;
+    -fx-padding:0;
+}

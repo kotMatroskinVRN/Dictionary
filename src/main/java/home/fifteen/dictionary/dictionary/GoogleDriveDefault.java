@@ -55,7 +55,7 @@ public class GoogleDriveDefault implements DictionaryGetter {
             String URL_NAME = "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=";
             URL url = new URL(URL_NAME + FILE_ID);
 
-        InputStream is = url.openStream();
+        InputStreamReader is = new InputStreamReader(url.openStream() , "UTF-8" ) ;
 
 //        while (is==null){
 //            Thread.sleep(50);
