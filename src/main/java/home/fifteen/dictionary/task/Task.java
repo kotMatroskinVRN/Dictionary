@@ -10,10 +10,16 @@ public class Task {
 
     private Logger log = Main.getLog();
 
-    private final Map<String,String> words = new HashMap<>();
-    private final List<String> answers = new ArrayList<>();
+    private final Map<String,String> words ;
+    private final ArrayList<String> answers ;
 
     private String task ;
+
+    public Task(){
+        words = new HashMap<>();
+        answers = new ArrayList<>();
+//        words.clear();
+    }
 
 
     public void addDictionary(Dictionary dictionary){
@@ -36,11 +42,17 @@ public class Task {
     public String getTask(){
         return task;
     }
-    public List<String> getAnswers(){
+    public ArrayList<String> getAnswers(){
         return answers;
     }
     public boolean checkAnswer(String description){
         return words.get(task).equals(description);
+    }
+
+    public void clear(){
+        if(!words.isEmpty()){
+            words.clear();
+        }
     }
 
     private void makeAnswers(){

@@ -20,6 +20,10 @@ public class Main extends Application  {
     private final static Logger log = Logger.getLogger(ClassLoader.class.getName());
 
     private final static String FXML = "MainWindow.fxml";
+    private final static String CHOOSER = "ChooseDictionary.fxml";
+
+    private static Parent root , chooser ;
+
 
     public static void main(String[] args) {
 
@@ -36,18 +40,18 @@ public class Main extends Application  {
             encodeDictionary(args[1]);
         }
 
-        Task task = new Task();
-
-        Sources.init();
-        for(DictionaryGetter getter : Sources.getGetters()){
-            task.addDictionary(getter.getDictionary());
-            log.fine(getter.getDictionary().toString());
-        }
-
-        for(int i=0;i<10;i++) {
-            task.prepareTask();
-            log.info(task.toString());
-        }
+//        Task task = new Task();
+//
+//        Sources.init();
+//        for(DictionaryGetter getter : Sources.getGetters()){
+//            task.addDictionary(getter.getDictionary());
+//            log.fine(getter.getDictionary().toString());
+//        }
+//
+//        for(int i=0;i<10;i++) {
+//            task.prepareTask();
+//            log.info(task.toString());
+//        }
 
         launch(args);
     }
@@ -59,11 +63,13 @@ public class Main extends Application  {
 
         Stage stage   = primaryStage;
         FXMLLoader loader = new FXMLLoader();
-        Parent content = loader.load( ClassLoader.getSystemResourceAsStream(FXML) );
+        root = loader.load( ClassLoader.getSystemResourceAsStream(FXML) );
+        loader = new FXMLLoader();
+        chooser = loader.load( ClassLoader.getSystemResourceAsStream(CHOOSER) );
 
 
 
-        Scene scene = new Scene(content);
+        Scene scene = new Scene(root);
 
         stage.setResizable(false);
         stage.setScene(scene);
@@ -109,6 +115,22 @@ public class Main extends Application  {
 
     public static Logger getLog(){
         return log;
+    }
+
+    public static Parent getRoot() {
+        return root;
+    }
+
+    public static Parent getChooser() {
+        return chooser;
+    }
+
+    public static String getChooserLink(){
+        return CHOOSER;
+    }
+
+    public static String getMainLink(){
+        return FXML;
     }
 
 }

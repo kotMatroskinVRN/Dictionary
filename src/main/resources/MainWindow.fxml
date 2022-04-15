@@ -14,15 +14,15 @@
    <top>
       <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Dictionary" />
+            <Button mnemonicParsing="false" text="Dictionary" onAction="#switchScene" />
          </children>
       </AnchorPane>
    </top>
    <bottom>
       <HBox prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Label" />
-            <Label text="Label" />
+            <Label fx:id="rightInaRow" text="Label" />
+            <Label fx:id="rightAnswers" text="Label" />
          </children>
       </HBox>
    </bottom>
@@ -31,16 +31,16 @@
         <items>
             <FlowPane>
                <children>
-                  <Label text="Label" />
+                  <Label  fx:id="question" text="Label" />
                </children>
             </FlowPane>
             <VBox>
                <children>
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer1" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer2" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer3" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer4" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer5" mnemonicParsing="false" text="Button" />
                </children>
             </VBox>
         </items>

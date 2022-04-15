@@ -29,7 +29,7 @@ public enum Sources {
     },
     ;
 
-    private Logger log = Main.getLog();
+    private final Logger log = Main.getLog();
 
     private static final Set<DictionaryGetter> getters = new HashSet<>();
 
@@ -44,6 +44,9 @@ public enum Sources {
     }
 
     public static void init(){
+        if(!getters.isEmpty()){
+            getters.clear();
+        }
         for( Sources source : Sources.values() ){
             source.readSource();
         }
