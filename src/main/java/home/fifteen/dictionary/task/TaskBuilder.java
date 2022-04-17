@@ -7,7 +7,7 @@ import java.util.Set;
 public class TaskBuilder {
 
     private final Set<DictionaryGetter> getters ;
-    private final Task task;
+    private Task task;
 
 
     public TaskBuilder(Set<DictionaryGetter> getters) {
@@ -28,5 +28,11 @@ public class TaskBuilder {
         return task;
     }
 
+    public void setGetters(Set<DictionaryGetter> getters){
+        this.getters.clear();
+        this.getters.addAll(getters);
+        task = new Task();
+        init();
+    }
 
 }

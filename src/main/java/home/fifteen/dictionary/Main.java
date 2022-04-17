@@ -1,13 +1,13 @@
 package home.fifteen.dictionary;
 
+import home.fifteen.dictionary.controller.SceneSwitcher;
 import home.fifteen.dictionary.dictionary.*;
-import home.fifteen.dictionary.dictionary.Sources;
-import home.fifteen.dictionary.task.Task;
+import home.fifteen.dictionary.task.TaskBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -21,8 +21,6 @@ public class Main extends Application  {
 
     private final static String FXML = "MainWindow.fxml";
     private final static String CHOOSER = "ChooseDictionary.fxml";
-
-    private static Parent root , chooser ;
 
 
     public static void main(String[] args) {
@@ -60,31 +58,42 @@ public class Main extends Application  {
     public void start(Stage primaryStage) {
 
         try {
-
-        Stage stage   = primaryStage;
-        FXMLLoader loader = new FXMLLoader();
-        root = loader.load( ClassLoader.getSystemResourceAsStream(FXML) );
-        loader = new FXMLLoader();
-        chooser = loader.load( ClassLoader.getSystemResourceAsStream(CHOOSER) );
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load( ClassLoader.getSystemResourceAsStream(FXML) );
+            Scene main = new Scene(root);
+            SceneSwitcher controller = loader.getController();
 
 
+            Sources.init();
+            TaskBuilder taskBuilder = new TaskBuilder(Sources.getGetters());
+            taskBuilder.init();
 
-        Scene scene = new Scene(root);
+            loader = new FXMLLoader();
+            root = loader.load( ClassLoader.getSystemResourceAsStream(CHOOSER) );
+            Scene dictionaryChoose = new Scene(root);
+            SceneSwitcher chooserController = loader.getController();
 
-        stage.setResizable(false);
-        stage.setScene(scene);
-//        stage.getIcons().add(
-//                new Image(
-//                        Objects.requireNonNull(
-//                                ClassLoader.getSystemResourceAsStream("icon/SeaBattle_32x32.PNG")
-//                        )
-//                )
-//        );
+            controller.setSecondaryController( (Initializable) chooserController);
+            controller.setSecondaryScene( dictionaryChoose );
+            controller.setTaskBuilder(taskBuilder);
+            chooserController.setSecondaryController( (Initializable) controller);
+            chooserController.setSecondaryScene( main );
+            chooserController.setTaskBuilder(taskBuilder);
+
+            primaryStage.setResizable(false);
+            primaryStage.setScene(main);
+    //        stage.getIcons().add(
+    //                new Image(
+    //                        Objects.requireNonNull(
+    //                                ClassLoader.getSystemResourceAsStream("icon/SeaBattle_32x32.PNG")
+    //                        )
+    //                )
+    //        );
 
 
 
 
-        stage.show();
+        primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,22 +124,6 @@ public class Main extends Application  {
 
     public static Logger getLog(){
         return log;
-    }
-
-    public static Parent getRoot() {
-        return root;
-    }
-
-    public static Parent getChooser() {
-        return chooser;
-    }
-
-    public static String getChooserLink(){
-        return CHOOSER;
-    }
-
-    public static String getMainLink(){
-        return FXML;
     }
 
 }

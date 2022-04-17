@@ -44,9 +44,11 @@ public enum Sources {
     }
 
     public static void init(){
-        if(!getters.isEmpty()){
-            getters.clear();
-        }
+//        if(!getters.isEmpty()){
+//            getters.clear();
+//        }
+
+        getters.clear();
         for( Sources source : Sources.values() ){
             source.readSource();
         }

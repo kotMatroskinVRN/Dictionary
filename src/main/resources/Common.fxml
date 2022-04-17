@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.VBox?>
 
 
+<?import javafx.geometry.Insets?>
+
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="560.0" prefWidth="320.0"
@@ -27,8 +29,8 @@
    <bottom>
       <HBox prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="rightAnswers" text="Label" />
             <Label fx:id="rightInaRow" text="Label" />
+            <Label fx:id="rightAnswers" text="Label" />
          </children>
       </HBox>
    </bottom>
@@ -42,14 +44,38 @@
             </FlowPane>
             <VBox>
                <children>
-                  <Button fx:id="answer1" mnemonicParsing="false" text="Button" onAction="#checkAnswer" />
-                  <Button fx:id="answer2" mnemonicParsing="false" text="Button" onAction="#checkAnswer" />
-                  <Button fx:id="answer3" mnemonicParsing="false" text="Button" onAction="#checkAnswer" />
-                  <Button fx:id="answer4" mnemonicParsing="false" text="Button" onAction="#checkAnswer" />
-                  <Button fx:id="answer5" mnemonicParsing="false" text="Button" onAction="#checkAnswer" />
+                  <Button fx:id="answer1" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer2" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer3" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer4" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="answer5" mnemonicParsing="false" text="Button" />
                </children>
             </VBox>
         </items>
       </SplitPane>
    </center>
+</BorderPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="560.0" prefWidth="320.0"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="home.fifteen.dictionary.controller.ChooserController">
+<center>
+   <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+</center>
+<top>
+   <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="50.0" BorderPane.alignment="CENTER">
+      <children>
+         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Internet" />
+         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Local" />
+         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Encrypted" />
+      </children>
+      <padding>
+         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </padding>
+   </FlowPane>
+</top>
+<bottom>
+   <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Back" onAction="#switchScene" />
+</bottom>
 </BorderPane>
