@@ -104,5 +104,8 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         answer3.setText(task.getAnswers().get(2));
         answer4.setText(task.getAnswers().get(3));
         answer5.setText(task.getAnswers().get(4));
+
+        rightAnswers.setText( String.valueOf(task.getCorrectAnswers()));
+        rightInaRow.setText(String.valueOf(task.getCorrectAnswersInARow()));
     }
 }

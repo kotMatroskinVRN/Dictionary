@@ -72,7 +72,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
         for(DictionaryGetter getter : Sources.getGetters()){
             CheckBox checkBox = new CheckBox();
             checkBox.setSelected(true);
-            checkBox.setText(getter.getDictionary().getName());
+            checkBox.setText(getter.getDictionary().getNameForList());
             sources.put(checkBox , getter);
             sourceListView.getChildren().add(checkBox);
             log.fine(getter.getDictionary().toString());

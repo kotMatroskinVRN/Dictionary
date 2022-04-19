@@ -19,6 +19,11 @@ public class Dictionary {
     public String getName() {
         return name;
     }
+    public String getNameForList() {
+        return name.replaceAll("_" , " ")
+                .replaceAll(".properties" , "");
+    }
+
 
     public void setName(String name) {
         this.name = name;

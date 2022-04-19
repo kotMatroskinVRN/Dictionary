@@ -1,0 +1,17 @@
+BorderPane{
+    -fx-outer-border: transparent;
+    -fx-border-width:0;
+}
+
+VBox {
+    -fx-spacing: 10;
+}
+
+ScrollPane{
+    -fx-padding: 10 ;
+}
+
+
+#back {
+   -fx-padding: 10 ;
+}

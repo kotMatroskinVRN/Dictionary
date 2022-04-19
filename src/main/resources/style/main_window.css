@@ -1,0 +1,46 @@
+BorderPane{
+
+    -fx-border-width:0;
+}
+
+HBox {
+    -fx-alignment: center;
+    -fx-font-weight:bold;
+    -fx-spacing: 20;
+    -fx-font-size: 20;
+    -fx-wrap-text: true;
+}
+
+VBox {
+    -fx-alignment: center;
+    -fx-font-weight:bold;
+    -fx-spacing: 15;
+    -fx-border-width:0;
+}
+
+VBox .button{
+    -fx-pref-width:  250px;
+    -fx-pref-height: 60px;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-outer-border: transparent;
+}
+
+FlowPane{
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 10 ;
+}
+
+.split-pane-divider {
+  -fx-padding: 0 ;
+}
+
+#question{
+    -fx-alignment: center;
+    -fx-font-weight:bold;
+    -fx-spacing: 20;
+    -fx-font-size: 30;
+    -fx-wrap-text: true;
+    -fx-padding: 10 ;
+}

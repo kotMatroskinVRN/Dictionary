@@ -28,7 +28,7 @@ public class FileGetterEncrypted implements DictionaryGetter {
         String string = fileToString().replace("\n" , "");
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] decodedBytes = decoder.decode(string);
-        String decodedString = new String(decodedBytes);
+        String decodedString = new String(decodedBytes , StandardCharsets.UTF_8);
 
         setDictionaryName();
 
@@ -61,7 +61,7 @@ public class FileGetterEncrypted implements DictionaryGetter {
         StringBuilder result = new StringBuilder();
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_ID), "UTF-8"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_ID), StandardCharsets.UTF_8));
             String line = reader.readLine();
             while (line != null) {
                 result.append(line);

@@ -8,14 +8,14 @@ import java.util.logging.Logger;
 
 public class Task {
 
-    private Logger log = Main.getLog();
+    private final Logger log = Main.getLog();
 
     private final Map<String,String> words ;
     private final ArrayList<String> answers ;
 
     private String task ;
     private int correctAnswers , correctAnswersInARow;
-    private boolean landslide;
+
 
     public Task(){
         words = new HashMap<>();
@@ -23,7 +23,7 @@ public class Task {
 //        words.clear();
         correctAnswers = 0;
         correctAnswersInARow = 0;
-        landslide = true;
+
     }
 
 
@@ -50,27 +50,26 @@ public class Task {
     public ArrayList<String> getAnswers(){
         return answers;
     }
-    public boolean checkAnswer(String description){
+    public void checkAnswer(String description){
         boolean factor = words.get(task).equals(description);
 
         if(factor){
             correctAnswers++;
-            if(landslide){
-                correctAnswersInARow++;
-            }
+            correctAnswersInARow++;
+
         }else{
-            landslide = false;
+
             correctAnswersInARow = 0;
         }
 
-        return factor ;
+
     }
 
-    public void clear(){
-        if(!words.isEmpty()){
-            words.clear();
-        }
-    }
+//    public void clear(){
+//        if(!words.isEmpty()){
+//            words.clear();
+//        }
+//    }
 
     public int getCorrectAnswers() {
         return correctAnswers;
