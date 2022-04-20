@@ -4,6 +4,7 @@ BorderPane{
 }
 
 HBox {
+    -fx-pref-height: 40px;
     -fx-alignment: center;
     -fx-font-weight:bold;
     -fx-spacing: 20;
@@ -30,6 +31,8 @@ VBox .button{
 FlowPane{
     -fx-alignment: CENTER-LEFT;
     -fx-padding: 10 ;
+    -fx-border-width:0;
+    -fx-outer-border: transparent;
 }
 
 .split-pane-divider {
@@ -40,7 +43,16 @@ FlowPane{
     -fx-alignment: center;
     -fx-font-weight:bold;
     -fx-spacing: 20;
-    -fx-font-size: 30;
+    -fx-font-size: 24;
     -fx-wrap-text: true;
     -fx-padding: 10 ;
+}
+
+#correctAnswer {
+    -fx-pref-height: 40px;
+    -fx-alignment: center;
+    -fx-font-weight:bold;
+    -fx-spacing: 20;
+    -fx-font-size: 14;
+    -fx-wrap-text: true;
 }

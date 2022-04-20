@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Labeled;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -23,7 +24,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
     private Initializable mainWindowController;
     private Scene main;
-    private final Map<CheckBox , DictionaryGetter> sources = new HashMap<>() ;
+    private final Map<CheckBox , DictionaryGetter> sources = new TreeMap<>(Comparator.comparing(Labeled::getText)) ;
     private TaskBuilder taskBuilder ;
 
     @Override
@@ -40,7 +41,6 @@ public class ChooserController implements Initializable , SceneSwitcher{
     public void switchScene(ActionEvent event){
 
         getSelectedSource();
-//        ((SceneSwitcher)mainWindowController).setTaskBuilder(taskBuilder);
 
         Node    node = (Node) event.getSource();
         Stage window = (Stage)( node.getScene().getWindow() );
@@ -74,9 +74,11 @@ public class ChooserController implements Initializable , SceneSwitcher{
             checkBox.setSelected(true);
             checkBox.setText(getter.getDictionary().getNameForList());
             sources.put(checkBox , getter);
-            sourceListView.getChildren().add(checkBox);
+
+            checkBox.setOnAction((ae)->getSelectedSource());
             log.fine(getter.getDictionary().toString());
         }
+        sourceListView.getChildren().addAll(sources.keySet());
 
         log.info( String.valueOf(sourceListView.getChildren().size()));
     }
@@ -94,6 +96,15 @@ public class ChooserController implements Initializable , SceneSwitcher{
         }
         log.info("getters number : " + getters.size());
         log.fine(taskBuilder.toString());
+
+        if(getters.size()==0){
+            for(CheckBox checkBox : sources.keySet()){
+                getters.add(sources.get(checkBox));
+                checkBox.setSelected(true);
+                break;
+            }
+        }
+
         taskBuilder.setGetters(getters);
         log.fine(taskBuilder.toString());
     }

@@ -15,14 +15,15 @@
             xmlns="http://javafx.com/javafx/8"
             stylesheets="style/main_window.css"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="home.fifteen.dictionary.controller.MainWindowController">
+            fx:controller="home.fifteen.dictionary.controller.MainWindowController"
+            fx:id="borderPane">
    <top>
       <FlowPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <Button mnemonicParsing="false" text="Dictionary" onAction="#switchScene"/>
       </FlowPane>
    </top>
    <bottom>
-      <HBox prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="bottomPane" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <Label  text="Total : "/>
          <Label fx:id="rightAnswers" text="Label"/>
          <Label text="In a Row : "/>

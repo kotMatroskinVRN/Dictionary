@@ -13,7 +13,7 @@ public class Task {
     private final Map<String,String> words ;
     private final ArrayList<String> answers ;
 
-    private String task ;
+    private String task , correctAnswer;
     private int correctAnswers , correctAnswersInARow;
 
 
@@ -50,7 +50,10 @@ public class Task {
     public ArrayList<String> getAnswers(){
         return answers;
     }
-    public void checkAnswer(String description){
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+    public boolean checkAnswer(String description){
         boolean factor = words.get(task).equals(description);
 
         if(factor){
@@ -62,6 +65,7 @@ public class Task {
             correctAnswersInARow = 0;
         }
 
+        return factor;
 
     }
 
@@ -84,7 +88,8 @@ public class Task {
             answers.clear();
         }
 
-        answers.add(words.get(task));
+        correctAnswer = words.get(task);
+        answers.add( correctAnswer );
 
         for(int i=0;i<4;i++){
             String description = words.get(getRandomWord());
