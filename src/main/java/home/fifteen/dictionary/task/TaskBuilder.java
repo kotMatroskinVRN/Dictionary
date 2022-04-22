@@ -2,6 +2,7 @@ package home.fifteen.dictionary.task;
 
 import home.fifteen.dictionary.dictionary.DictionaryGetter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class TaskBuilder {
@@ -11,14 +12,15 @@ public class TaskBuilder {
 
 
     public TaskBuilder(Set<DictionaryGetter> getters) {
-        this.getters = getters;
+        this.getters = new HashSet<>(getters);
+//        this.getters = getters;
         task = new Task();
     }
 
     public void init(){
 
         for(DictionaryGetter getter : getters){
-            getter.init();
+//            getter.init();
             task.addDictionary(getter.getDictionary());
         }
 

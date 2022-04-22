@@ -3,12 +3,15 @@ BorderPane{
     -fx-border-width:0;
 }
 
+
+
 VBox {
     -fx-spacing: 10;
 }
 
 ScrollPane{
     -fx-padding: 10 ;
+    -fx-box-border: transparent;
 }
 
 

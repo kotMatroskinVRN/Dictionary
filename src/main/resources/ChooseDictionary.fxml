@@ -20,7 +20,7 @@
        </ScrollPane>
    </center>
    <top>
-       <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="50.0"
+       <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0"
                  BorderPane.alignment="CENTER">
            <padding>
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
@@ -33,7 +33,7 @@
    </top>
    <bottom >
        <FlowPane id="back">
-            <Button  mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="72.0" text="Back" />
+            <Button  mnemonicParsing="false" onAction="#switchScene" prefWidth="72.0" text="Back" />
        </FlowPane>
    </bottom>
 </BorderPane>

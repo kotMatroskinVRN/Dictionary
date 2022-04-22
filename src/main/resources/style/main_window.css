@@ -1,15 +1,11 @@
-BorderPane{
-
-    -fx-border-width:0;
-}
-
 HBox {
-    -fx-pref-height: 40px;
+    /*-fx-pref-height: 40px;*/
     -fx-alignment: center;
     -fx-font-weight:bold;
     -fx-spacing: 20;
     -fx-font-size: 20;
     -fx-wrap-text: true;
+    -fx-border-width:0;
 }
 
 VBox {
@@ -21,18 +17,22 @@ VBox {
 
 VBox .button{
     -fx-pref-width:  250px;
-    -fx-pref-height: 60px;
+    -fx-pref-height: 70px;
     -fx-font-size: 16;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
     -fx-outer-border: transparent;
+    -fx-border-color:transparent;
 }
 
 FlowPane{
     -fx-alignment: CENTER-LEFT;
     -fx-padding: 10 ;
     -fx-border-width:0;
-    -fx-outer-border: transparent;
+}
+
+SplitPane{
+    -fx-box-border: transparent;
 }
 
 .split-pane-divider {

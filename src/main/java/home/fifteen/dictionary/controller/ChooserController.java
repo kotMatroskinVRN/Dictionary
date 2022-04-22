@@ -67,7 +67,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
     private void readAllSources(){
 
-        Sources.init();
+//        Sources.init();
         log.info("Sources : " + Sources.getGetters().toString());
         for(DictionaryGetter getter : Sources.getGetters()){
             CheckBox checkBox = new CheckBox();

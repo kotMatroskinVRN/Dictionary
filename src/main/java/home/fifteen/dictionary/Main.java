@@ -8,10 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -82,13 +84,13 @@ public class Main extends Application  {
 
             primaryStage.setResizable(false);
             primaryStage.setScene(main);
-    //        stage.getIcons().add(
-    //                new Image(
-    //                        Objects.requireNonNull(
-    //                                ClassLoader.getSystemResourceAsStream("icon/SeaBattle_32x32.PNG")
-    //                        )
-    //                )
-    //        );
+            primaryStage.getIcons().add(
+                    new Image(
+                            Objects.requireNonNull(
+                                    ClassLoader.getSystemResourceAsStream("icons8-book-64.png")
+                            )
+                    )
+            );
 
 
 

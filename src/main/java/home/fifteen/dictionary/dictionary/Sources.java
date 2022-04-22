@@ -12,6 +12,12 @@ public enum Sources {
 //    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt"){
 //        @Override
 //        DictionaryGetter getGetter(String name) {
+//            return new GoogleDriveNoApi(name);
+//        }
+//    },
+//    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt"){
+//        @Override
+//        DictionaryGetter getGetter(String name) {
 //            return new GoogleDriveDefault(name);
 //        }
 //    },

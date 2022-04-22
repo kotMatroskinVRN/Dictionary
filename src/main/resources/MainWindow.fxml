@@ -18,12 +18,12 @@
             fx:controller="home.fifteen.dictionary.controller.MainWindowController"
             fx:id="borderPane">
    <top>
-      <FlowPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <FlowPane  BorderPane.alignment="CENTER">
          <Button mnemonicParsing="false" text="Dictionary" onAction="#switchScene"/>
       </FlowPane>
    </top>
    <bottom>
-      <HBox fx:id="bottomPane" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="bottomPane" BorderPane.alignment="CENTER" >
          <Label  text="Total : "/>
          <Label fx:id="rightAnswers" text="Label"/>
          <Label text="In a Row : "/>
@@ -31,7 +31,7 @@
       </HBox>
    </bottom>
    <center>
-      <SplitPane dividerPositions="0.1" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
+      <SplitPane dividerPositions="0.1" orientation="VERTICAL"
                  BorderPane.alignment="CENTER">
          <HBox>
             <Label id="question" fx:id="question" text="Label"/>
