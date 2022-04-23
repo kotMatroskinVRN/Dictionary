@@ -15,6 +15,8 @@ public class GoogleDriveNoApi implements DictionaryGetter {
 
     private final Dictionary dictionary;
     private URL url;
+    private String fileName;
+    private Long lastModified;
 
 
     public GoogleDriveNoApi() {
@@ -45,6 +47,7 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             dictionary.addWord( parseKey(key) , prb.getString(key));
         }
 
+        getFileInfo();
         setDictionaryName();
 
         } catch (IOException e) {
@@ -69,6 +72,18 @@ public class GoogleDriveNoApi implements DictionaryGetter {
     @Override
     public void setDictionaryName(){
 
+        dictionary.setName(fileName);
+
+
+    }
+
+    @Override
+    public Long getLastModified(){
+        return lastModified;
+    }
+
+    private void getFileInfo(){
+
         try {
             URLConnection connection = url.openConnection();
             connection.connect();
@@ -78,17 +93,19 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             Matcher matcher = pattern.matcher(requestResult);
             if(matcher.find()) {
                 log.info("Google Drive File Name has been found ");
-                String fileName = matcher.group(1);
-                System.out.println(fileName);
-                dictionary.setName(fileName);
+                fileName = matcher.group(1);
+                log.info(fileName);
+
             }
+
+            lastModified = connection.getLastModified();
+
 
 
         } catch (IOException e) {
             e.printStackTrace();
-            dictionary.setName("Not Found");
+            fileName ="Not Found";
         }
-
 
     }
 

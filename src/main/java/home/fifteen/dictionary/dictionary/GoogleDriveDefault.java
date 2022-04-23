@@ -46,7 +46,10 @@ public class GoogleDriveDefault implements DictionaryGetter {
         this.FILE_ID = FILE_ID;
     }
 
-
+    @Override
+    public Long getLastModified() {
+        return 0L;
+    }
 
     @Override
     public void init() {

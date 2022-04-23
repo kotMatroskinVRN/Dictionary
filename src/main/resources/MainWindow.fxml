@@ -9,39 +9,36 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="560.0" prefWidth="320.0"
+<BorderPane prefHeight="560.0" prefWidth="320.0"
             xmlns="http://javafx.com/javafx/8"
             stylesheets="style/main_window.css"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="home.fifteen.dictionary.controller.MainWindowController"
             fx:id="borderPane">
    <top>
-      <FlowPane  BorderPane.alignment="CENTER">
+      <FlowPane>
          <Button mnemonicParsing="false" text="Dictionary" onAction="#switchScene"/>
       </FlowPane>
    </top>
    <bottom>
-      <HBox fx:id="bottomPane" BorderPane.alignment="CENTER" >
+      <HBox fx:id="bottomPane" >
          <Label  text="Total : "/>
-         <Label fx:id="rightAnswers" text="Label"/>
+         <Label fx:id="rightAnswers" />
          <Label text="In a Row : "/>
-         <Label fx:id="rightInaRow" text="Label"/>
+         <Label fx:id="rightInaRow" />
       </HBox>
    </bottom>
    <center>
-      <SplitPane dividerPositions="0.1" orientation="VERTICAL"
-                 BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.1" orientation="VERTICAL">
          <HBox>
-            <Label id="question" fx:id="question" text="Label"/>
+            <Label id="question" fx:id="question" />
          </HBox>
          <VBox>
-            <Button fx:id="answer1" text="Button" onAction="#checkAnswer"/>
-            <Button fx:id="answer2" text="Button" onAction="#checkAnswer"/>
-            <Button fx:id="answer3" text="Button" onAction="#checkAnswer"/>
-            <Button fx:id="answer4" text="Button" onAction="#checkAnswer"/>
-            <Button fx:id="answer5" text="Button" onAction="#checkAnswer"/>
+            <Button fx:id="answer1"  onAction="#checkAnswer"/>
+            <Button fx:id="answer2"  onAction="#checkAnswer"/>
+            <Button fx:id="answer3"  onAction="#checkAnswer"/>
+            <Button fx:id="answer4"  onAction="#checkAnswer"/>
+            <Button fx:id="answer5"  onAction="#checkAnswer"/>
          </VBox>
       </SplitPane>
    </center>

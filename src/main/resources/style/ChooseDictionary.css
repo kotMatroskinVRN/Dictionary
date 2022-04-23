@@ -3,10 +3,23 @@ BorderPane{
     -fx-border-width:0;
 }
 
+FlowPane{
+    -fx-alignment: CENTER;
+    -fx-padding: 10 ;
+}
+
+FlowPane .button{
+    -fx-pref-width: 100px;
+}
 
 
 VBox {
     -fx-spacing: 10;
+}
+
+HBox {
+    -fx-alignment: center;
+    -fx-font-weight:bold;
 }
 
 ScrollPane{
@@ -14,7 +27,35 @@ ScrollPane{
     -fx-box-border: transparent;
 }
 
+SplitPane{
+    -fx-box-border: transparent;
+}
+
+
+#header{
+    -fx-alignment: center;
+    -fx-font-weight:bold;
+}
+
+.split-pane-divider {
+  -fx-padding: 0 ;
+}
+
 
 #back {
    -fx-padding: 10 ;
+   -fx-alignment: CENTER-LEFT;
+
+}
+
+#back .button{
+    -fx-pref-width: 100px;
+}
+
+/* remove horizontal scroll bar */
+ScrollPane .scroll-bar:horizontal .increment-arrow,
+ScrollPane .scroll-bar:horizontal .decrement-arrow,
+ScrollPane .scroll-bar:horizontal .increment-button,
+ScrollPane .scroll-bar:horizontal .decrement-button {
+    -fx-padding:0;
 }

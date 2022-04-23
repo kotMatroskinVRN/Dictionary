@@ -9,8 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Labeled;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -21,14 +20,29 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
     @FXML
     VBox sourceListView;
+    @FXML
+    VBox onlineSourceListView;
+    @FXML
+    Button internetSource;
+    @FXML
+    Button download;
+    @FXML
+    Label onlineSourceHeader;
+    @FXML
+    SplitPane mainSplit;
 
     private Initializable mainWindowController;
     private Scene main;
     private final Map<CheckBox , DictionaryGetter> sources = new TreeMap<>(Comparator.comparing(Labeled::getText)) ;
+    private final Map<CheckBox , DictionaryGetter> sourcesOnline = new TreeMap<>(Comparator.comparing(Labeled::getText)) ;
     private TaskBuilder taskBuilder ;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        onlineSourceHeader.setVisible(false);
+        download.setDisable(true);
+        mainSplit.setDividerPositions(0.9);
 
         sources.clear();
         sourceListView.getChildren().clear();
@@ -48,6 +62,17 @@ public class ChooserController implements Initializable , SceneSwitcher{
         mainWindowController.initialize(null,null);
     }
 
+    @FXML
+    public void getOnlineSources(ActionEvent event){
+        onlineSourceHeader.setVisible(true);
+        mainSplit.setDividerPositions(0.4);
+
+    }
+
+    @FXML void download(ActionEvent event){
+
+    }
+
     @Override
     public void setSecondaryController(Initializable mainWindowController){
         this.mainWindowController = mainWindowController;
@@ -65,9 +90,10 @@ public class ChooserController implements Initializable , SceneSwitcher{
     }
 
 
+
+
     private void readAllSources(){
 
-//        Sources.init();
         log.info("Sources : " + Sources.getGetters().toString());
         for(DictionaryGetter getter : Sources.getGetters()){
             CheckBox checkBox = new CheckBox();

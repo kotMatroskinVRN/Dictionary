@@ -9,25 +9,25 @@ import java.util.logging.Logger;
 
 public enum Sources {
 
-//    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt"){
-//        @Override
-//        DictionaryGetter getGetter(String name) {
-//            return new GoogleDriveNoApi(name);
-//        }
-//    },
+    GOOGLE_DRIVE_NOAPI("DictionarySource/GoogleDrive.txt" , false){
+        @Override
+        DictionaryGetter getGetter(String name) {
+            return new GoogleDriveNoApi(name);
+        }
+    },
 //    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt"){
 //        @Override
 //        DictionaryGetter getGetter(String name) {
 //            return new GoogleDriveDefault(name);
 //        }
 //    },
-    ENCRYPTED("DictionarySource/EncryptedFiles.txt"){
+    ENCRYPTED("DictionarySource/EncryptedFiles.txt" , true){
         @Override
         DictionaryGetter getGetter(String name) {
             return new FileGetterEncrypted(name);
         }
     },
-    PLAIN("DictionarySource/PlainFiles.txt"){
+    PLAIN("DictionarySource/PlainFiles.txt" , true){
         @Override
         DictionaryGetter getGetter(String name) {
             return new FileGetter(name);
@@ -36,16 +36,20 @@ public enum Sources {
     ;
 
     private final Logger log = Main.getLog();
-
     private static final Set<DictionaryGetter> getters = new HashSet<>();
+    private static final Set<DictionaryGetter> onlineGetters = new HashSet<>();
+    private final String fileName;
+    private final boolean isOffline;
 
-    private String fileName;
-
-    Sources(String fileName){
+    Sources(String fileName , boolean isOffline){
         this.fileName = fileName;
+        this.isOffline = isOffline;
     }
 
     public static Set<DictionaryGetter> getGetters(){
+        return getters;
+    }
+    public static Set<DictionaryGetter> getOnlineGetters(){
         return getters;
     }
 
@@ -56,14 +60,24 @@ public enum Sources {
 
         getters.clear();
         for( Sources source : Sources.values() ){
-            source.readSource();
+            if(source.isOffline) {
+                source.readSource();
+            }
+        }
+    }
+
+    public static void initOnline(){
+        for( Sources source : Sources.values() ){
+            if(!source.isOffline) {
+                source.readOnlineSource();
+            }
         }
     }
 
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+//    public void setFileName(String fileName) {
+//        this.fileName = fileName;
+//    }
 
 
 
@@ -78,6 +92,19 @@ public enum Sources {
                 getter.getDictionary().setName(file.getName());
             }
             getters.add(getter);
+        }
+
+    }
+
+    private void readOnlineSource(){
+        for (String line : fileToString().split("\n")){
+            DictionaryGetter getter = getGetter(line);
+            getter.init();
+            File file = new File(line);
+            if(file.isFile()) {
+                getter.getDictionary().setName(file.getName());
+            }
+            onlineGetters.add(getter);
         }
 
     }

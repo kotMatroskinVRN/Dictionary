@@ -2,7 +2,6 @@ package home.fifteen.dictionary.dictionary;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.PropertyResourceBundle;
 
@@ -11,15 +10,18 @@ public class FileGetterEncrypted implements DictionaryGetter {
 
     private final String FILE_ID  ;
     private final Dictionary dictionary;
+    private final File file;
 
     public FileGetterEncrypted() {
         dictionary = new Dictionary();
         FILE_ID = "DictionarySource/encoded_clothes.properties";
+        file = new File(FILE_ID);
     }
 
     public FileGetterEncrypted(String FILE_ID) {
         this.FILE_ID = FILE_ID;
         dictionary = new Dictionary();
+        file = new File(FILE_ID);
     }
 
     @Override
@@ -55,6 +57,10 @@ public class FileGetterEncrypted implements DictionaryGetter {
         dictionary.setName(FILE_ID);
     }
 
+    @Override
+    public Long getLastModified() {
+        return file.lastModified();
+    }
 
 
     private String fileToString() {

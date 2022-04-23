@@ -10,14 +10,18 @@ public class FileGetter implements DictionaryGetter {
     private final String FILE_ID  ;
     private final Dictionary dictionary;
 
+    private final File file;
+
     public FileGetter() {
         dictionary = new Dictionary();
         FILE_ID = "DictionarySource/2018.properties";
+        file = new File(FILE_ID);
     }
 
     public FileGetter(String FILE_ID) {
         this.FILE_ID = FILE_ID;
         dictionary = new Dictionary();
+        file = new File(FILE_ID);
     }
 
     @Override
@@ -47,6 +51,10 @@ public class FileGetter implements DictionaryGetter {
         dictionary.setName(FILE_ID);
     }
 
+    @Override
+    public Long getLastModified() {
+        return file.lastModified();
+    }
 
 
 }
