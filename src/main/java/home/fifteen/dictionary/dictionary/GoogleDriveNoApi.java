@@ -170,7 +170,7 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             }
 
             // Convert the requestData into bytes
-            byte[] requestDataByes = requestData.toString().getBytes("UTF-8");
+            byte[] requestDataByes = requestData.toString().getBytes(StandardCharsets.UTF_8);
 
             // Set the doOutput flag to true
             httpURLConnection.setDoOutput(true);
