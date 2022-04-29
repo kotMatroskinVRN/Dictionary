@@ -1,4 +1,4 @@
-package home.fifteen.dictionary.dictionary;
+package home.fifteen.dictionary.utils;
 
 import home.fifteen.dictionary.Main;
 

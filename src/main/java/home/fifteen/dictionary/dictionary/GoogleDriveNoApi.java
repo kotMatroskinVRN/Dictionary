@@ -1,16 +1,16 @@
 package home.fifteen.dictionary.dictionary;
 
 
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestFactory;
+
 
 import java.io.*;
 import java.net.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PropertyResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 public class GoogleDriveNoApi implements DictionaryGetter {
 
     private final String FILE_ID  ;
+    private final String SERVER = "https://drive.google.com/uc";
 
     private final Dictionary dictionary;
     private URL url;
@@ -27,8 +28,8 @@ public class GoogleDriveNoApi implements DictionaryGetter {
 
     public GoogleDriveNoApi() {
         dictionary = new Dictionary();
-        FILE_ID  = "1E36Ch6rdHsEeg4J7d0--X2qiy1tinIcY";
-//        FILE_ID  = "1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz";
+//        FILE_ID  = "1E36Ch6rdHsEeg4J7d0--X2qiy1tinIcY";
+        FILE_ID  = "1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz";
     }
 
     public GoogleDriveNoApi(String FILE_ID) {
@@ -53,8 +54,11 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             dictionary.addWord( parseKey(key) , prb.getString(key));
         }
 
+            System.out.println(new Date(2592000));
+
 //        getFileInfo();
             httpRequest();
+            httpClient();
         setDictionaryName();
 
         } catch (IOException e) {
@@ -148,12 +152,18 @@ public class GoogleDriveNoApi implements DictionaryGetter {
 
     private void httpRequest(){
         try {
+            URL url = new URL(SERVER);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//            httpURLConnection.connect();
             httpURLConnection.setRequestMethod("GET");
 
+            log.info(String.valueOf(url));
+
             Map<String,String> params = new HashMap<>();
-            params.put("Access-Control-Allow-Headers","Content-MD5");
+//            params.put("export","download");
+            params.put("fields","md5Checksum");
+//            params.put("get","md5Checksum");
+            params.put("confirm","no_antivirus");
+            params.put("id",FILE_ID);
 
             // Instantiate a requestData object to store our data
             StringBuilder requestData = new StringBuilder();
@@ -164,9 +174,9 @@ public class GoogleDriveNoApi implements DictionaryGetter {
                 }
                 // Encode the parameter based on the parameter map we've defined
                 // and append the values from the map to form a single parameter
-                requestData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                requestData.append(URLEncoder.encode(param.getKey(), StandardCharsets.UTF_8));
                 requestData.append('=');
-                requestData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                requestData.append(URLEncoder.encode(String.valueOf(param.getValue()), StandardCharsets.UTF_8));
             }
 
             // Convert the requestData into bytes
@@ -200,7 +210,7 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             System.out.println(httpURLConnection.getResponseMessage());
 
             // Returns the error stream if the connection failed but the server sent useful data nonetheless
-            System.out.println(httpURLConnection.getErrorStream());
+            System.out.println(httpURLConnection.getContent());
 
 
             BufferedReader in = new BufferedReader(
@@ -221,5 +231,52 @@ public class GoogleDriveNoApi implements DictionaryGetter {
         }
 
     }
+
+    private void httpClient(){
+        try {
+            String base = "https://docs.google.com/uc";
+
+            String field = "title";
+            String address = base+ "?id=" + FILE_ID;
+            System.out.println(address);
+
+            HttpClient client = HttpClient.newBuilder()
+                    .followRedirects(HttpClient.Redirect.ALWAYS)
+                    .build();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(address))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client
+                    .send(request , HttpResponse.BodyHandlers.ofString());
+            log.info(String.valueOf(response.statusCode()));
+//            log.info(response.body());
+
+
+            HttpHeaders responseHeaders = response.headers();
+            Map<String,List<String>> headers = responseHeaders.map();
+
+            for (Map.Entry<String,List<String>> entry : headers.entrySet()){
+                String key = entry.getKey();
+                for (String value : entry.getValue())
+                    System.out.println(key + ": " + value);
+            }
+
+            log.info(response.body());
+
+            log.info(String.valueOf(responseHeaders.firstValue("content-length")));
+
+
+
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 
 }

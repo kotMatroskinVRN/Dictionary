@@ -34,6 +34,8 @@ public class FileGetter implements DictionaryGetter {
                 dictionary.addWord( parseKey(key) , prb.getString(key));
             }
 
+
+
             setDictionaryName();
 
         } catch (IOException e) {

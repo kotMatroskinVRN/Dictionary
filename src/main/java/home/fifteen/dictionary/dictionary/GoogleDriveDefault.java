@@ -1,19 +1,22 @@
 package home.fifteen.dictionary.dictionary;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
-import java.util.List;
-import java.util.PropertyResourceBundle;
+import java.util.*;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
@@ -21,8 +24,7 @@ import com.google.api.services.drive.model.File;
 
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.dictionary.DictionaryGetter;
+import org.apache.commons.codec.digest.Md5Crypt;
 
 
 public class GoogleDriveDefault implements DictionaryGetter {
@@ -55,21 +57,7 @@ public class GoogleDriveDefault implements DictionaryGetter {
     public void init() {
 
         try {
-            String URL_NAME = "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=";
-            URL url = new URL(URL_NAME + FILE_ID);
 
-        InputStreamReader is = new InputStreamReader(url.openStream() , "UTF-8" ) ;
-
-//        while (is==null){
-//            Thread.sleep(50);
-//            System.out.println("sleeping...");
-//        }
-
-        PropertyResourceBundle prb = new PropertyResourceBundle(is);
-
-        for (String key : prb.keySet()) {
-            dictionary.addWord( parseKey(key) , prb.getString(key));
-        }
 
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
             String APPLICATION_NAME = "learning";
@@ -77,7 +65,13 @@ public class GoogleDriveDefault implements DictionaryGetter {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-        file = service.files().get(FILE_ID).execute();
+
+            file = service.files()
+                    .get(FILE_ID)
+                    .setFields("*")
+                    .execute();
+
+
 
         printFile();
         setDictionaryName();
@@ -108,11 +102,44 @@ public class GoogleDriveDefault implements DictionaryGetter {
     }
 
 
+    private void download(){
+        try {
+
+        String URL_NAME = "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=";
+        URL url = new URL(URL_NAME + FILE_ID);
+
+        InputStreamReader is = new InputStreamReader(url.openStream() , StandardCharsets.UTF_8) ;
+        PropertyResourceBundle prb = new PropertyResourceBundle(is);
+
+        for (String key : prb.keySet()) {
+            dictionary.addWord( parseKey(key) , prb.getString(key));
+        }
+
+
+
+        } catch (IOException   e) {
+            e.printStackTrace();
+        }
+    }
 
     private void printFile() {
-            System.out.println("Title: " + file.getName());
-            System.out.println("Description: " + file.getDescription());
-            System.out.println("MIME type: " + file.getMimeType());
+        System.out.println("Title: " + file.getName());
+        System.out.println("Description: " + file.getDescription());
+        System.out.println("MIME type: " + file.getMimeType());
+        System.out.println("checksum: " + file.getMd5Checksum());
+        System.out.println("date: " + new Date(file.getModifiedTime().getValue()) );
+
+
+
+//        System.out.println(file.);
+//
+//        Map<String,String> map = file.ge;
+//
+//        for(Map.Entry<String,String> entry : map.entrySet()){
+//
+//            System.out.printf("%-30s%s\n" , entry , map.get(entry));
+//        }
+
     }
 
     private Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
@@ -183,6 +210,87 @@ public class GoogleDriveDefault implements DictionaryGetter {
 //        }
 //    }
 
+    private void httpRequest(GenericUrl genericUrl){
+        try {
+            URL url = genericUrl.toURL();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+
+            log.info(String.valueOf(url));
+
+            Map<String,String> params = new HashMap<>();
+//            params.put("export","download");
+            params.put("fields","md5Checksum");
+//            params.put("get","md5Checksum");
+            params.put("confirm","no_antivirus");
+            params.put("id",FILE_ID);
+
+            // Instantiate a requestData object to store our data
+            StringBuilder requestData = new StringBuilder();
+
+            for (Map.Entry<String,String> param : params.entrySet()) {
+                if (requestData.length() != 0) {
+                    requestData.append('&');
+                }
+                // Encode the parameter based on the parameter map we've defined
+                // and append the values from the map to form a single parameter
+                requestData.append(URLEncoder.encode(param.getKey(), StandardCharsets.UTF_8));
+                requestData.append('=');
+                requestData.append(URLEncoder.encode(String.valueOf(param.getValue()), StandardCharsets.UTF_8));
+            }
+
+            // Convert the requestData into bytes
+            byte[] requestDataByes = requestData.toString().getBytes(StandardCharsets.UTF_8);
+
+            // Set the doOutput flag to true
+            httpURLConnection.setDoOutput(true);
+
+            // Get the output stream of the connection instance
+            // and add the parameter to the request
+            try (DataOutputStream writer = new DataOutputStream(httpURLConnection.getOutputStream())) {
+                writer.write(requestDataByes);
+
+                // Always flush and close
+                writer.flush();
+                writer.close();
+            }
+
+            System.out.println(httpURLConnection.getResponseMessage());
+
+            // Returns the value of the content-type header field
+            System.out.println(httpURLConnection.getContentType());
+
+            // Returns an unmodifiable Map of the header fields
+            System.out.println(httpURLConnection.getHeaderFields());
+
+            // Gets the status code from an HTTP response message
+            System.out.println(httpURLConnection.getResponseCode());
+
+            // Gets the HTTP response message returned along with the response code from a server
+            System.out.println(httpURLConnection.getResponseMessage());
+
+            // Returns the error stream if the connection failed but the server sent useful data nonetheless
+            System.out.println(httpURLConnection.getContent());
+
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(httpURLConnection.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+
+            httpURLConnection.disconnect();
+
+            System.out.println(content);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 }

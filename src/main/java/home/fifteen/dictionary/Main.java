@@ -3,6 +3,7 @@ package home.fifteen.dictionary;
 import home.fifteen.dictionary.controller.SceneSwitcher;
 import home.fifteen.dictionary.dictionary.*;
 import home.fifteen.dictionary.task.TaskBuilder;
+import home.fifteen.dictionary.utils.EncoderBase64;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
