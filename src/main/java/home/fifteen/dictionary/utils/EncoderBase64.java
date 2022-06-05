@@ -13,6 +13,8 @@ public class EncoderBase64 {
 
     private final String fileName;
     private String codedText;
+    private String checkSum;
+    private long modifiedTime;
 
     public EncoderBase64() {
         fileName = "clothes.properties";
@@ -23,6 +25,25 @@ public class EncoderBase64 {
 
     }
 
+    public void initFileInfo(){
+
+        File file = new File(fileName);
+        modifiedTime = file.lastModified();
+
+        CheckSum sum = new CheckSum(file);
+        sum.generate();
+        checkSum = sum.getCheckSum();
+
+
+    }
+
+    public void setCheckSum(String checkSum) {
+        this.checkSum = checkSum;
+    }
+
+    public void setModifiedTime(long modifiedTime) {
+        this.modifiedTime = modifiedTime;
+    }
 
     public void encode(){
 
@@ -42,7 +63,7 @@ public class EncoderBase64 {
         StringBuilder result = new StringBuilder();
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
             String line = reader.readLine();
             while (line != null) {
                 result.append(line);
@@ -56,12 +77,32 @@ public class EncoderBase64 {
 
     private void stringToFile(){
         String outFileName = "encoded_" + fileName;
+        String        text = getContent();
 
-        try (PrintStream out = new PrintStream(new FileOutputStream(outFileName))) {
-            out.print(codedText);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        try {
+            FileWriter     writer = new FileWriter(outFileName, false)	 ;
+            (new File(fileName)).deleteOnExit();
+            writer.write(text) ; writer.close() ;
+        } catch (IOException e) { e.printStackTrace();}
 
     }
+
+    private String getContent(){
+        StringBuilder result = new StringBuilder();
+        result.append("Name = ").append(fileName).append("\n");
+        result.append("Modified = ").append(modifiedTime).append("\n");
+        result.append("checkSum = ").append(checkSum).append("\n");
+        result.append("code = ").append(codedText).append("\n");
+
+        return result.toString();
+    }
+
+    private void createTextFile(String fileName , String text){
+        try {
+            FileWriter     writer = new FileWriter(fileName, false)	 ;
+            (new File(fileName)).deleteOnExit();
+            writer.write(text) ; writer.close() ;
+        } catch (IOException e) { e.printStackTrace();}
+    }
+
 }

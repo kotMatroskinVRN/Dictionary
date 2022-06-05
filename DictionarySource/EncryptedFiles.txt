@@ -1,1 +1,4 @@
 DictionarySource/encoded_clothes.properties
+DictionarySource/encoded_0104.properties
+DictionarySource/encoded_2018.properties
+DictionarySource/encoded_default.properties

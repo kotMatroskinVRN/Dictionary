@@ -1,4 +1,4 @@
-package home.fifteen.dictionary.dictionary;
+package home.fifteen.dictionary.dictionary.getters;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -16,7 +16,6 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
@@ -24,7 +23,8 @@ import com.google.api.services.drive.model.File;
 
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import org.apache.commons.codec.digest.Md5Crypt;
+import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 
 
 public class GoogleDriveDefault implements DictionaryGetter {
@@ -34,23 +34,28 @@ public class GoogleDriveDefault implements DictionaryGetter {
 
 
 
-    private final Dictionary dictionary;
+    private final home.fifteen.dictionary.dictionary.Dictionary dictionary;
     private File file ;
 
     public GoogleDriveDefault() {
-        dictionary = new Dictionary();
+        dictionary = new home.fifteen.dictionary.dictionary.Dictionary();
         FILE_ID  = "1E36Ch6rdHsEeg4J7d0--X2qiy1tinIcY";
 //        FILE_ID  = "1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz";
     }
 
     public GoogleDriveDefault(String FILE_ID) {
-        dictionary = new Dictionary();
+        dictionary = new home.fifteen.dictionary.dictionary.Dictionary();
         this.FILE_ID = FILE_ID;
     }
 
     @Override
     public Long getLastModified() {
-        return 0L;
+        return file.getModifiedTime().getValue();
+    }
+
+    @Override
+    public String getMD5Sum() {
+        return file.getMd5Checksum();
     }
 
     @Override

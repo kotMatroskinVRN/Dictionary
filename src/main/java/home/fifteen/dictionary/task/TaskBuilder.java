@@ -1,6 +1,6 @@
 package home.fifteen.dictionary.task;
 
-import home.fifteen.dictionary.dictionary.DictionaryGetter;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,5 +1,8 @@
-package home.fifteen.dictionary.dictionary;
+package home.fifteen.dictionary.dictionary.getters;
 
+
+import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 
 import java.io.*;
 import java.util.PropertyResourceBundle;
@@ -56,6 +59,11 @@ public class FileGetter implements DictionaryGetter {
     @Override
     public Long getLastModified() {
         return file.lastModified();
+    }
+
+    @Override
+    public String getMD5Sum() {
+        return null;
     }
 
 

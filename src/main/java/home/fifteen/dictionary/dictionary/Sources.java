@@ -1,6 +1,7 @@
 package home.fifteen.dictionary.dictionary;
 
 import home.fifteen.dictionary.Main;
+import home.fifteen.dictionary.dictionary.getters.*;
 
 import java.io.*;
 import java.util.HashSet;
@@ -9,30 +10,30 @@ import java.util.logging.Logger;
 
 public enum Sources {
 
-    GOOGLE_DRIVE_NOAPI("DictionarySource/GoogleDrive.txt" , false){
-        @Override
-        DictionaryGetter getGetter(String name) {
-            return new GoogleDriveNoApi(name);
-        }
-    },
-//    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt"){
+//    GOOGLE_DRIVE_NOAPI("DictionarySource/GoogleDrive.txt" , false){
 //        @Override
 //        DictionaryGetter getGetter(String name) {
-//            return new GoogleDriveDefault(name);
+//            return new GoogleDriveNoApi(name);
 //        }
 //    },
+    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt", false){
+        @Override
+        DictionaryGetter getGetter(String name) {
+            return new GoogleDriveDefault(name);
+        }
+    },
     ENCRYPTED("DictionarySource/EncryptedFiles.txt" , true){
         @Override
         DictionaryGetter getGetter(String name) {
             return new FileGetterEncrypted(name);
         }
     },
-    PLAIN("DictionarySource/PlainFiles.txt" , true){
-        @Override
-        DictionaryGetter getGetter(String name) {
-            return new FileGetter(name);
-        }
-    },
+//    PLAIN("DictionarySource/PlainFiles.txt" , true){
+//        @Override
+//        DictionaryGetter getGetter(String name) {
+//            return new FileGetter(name);
+//        }
+//    },
     ;
 
     private final Logger log = Main.getLog();
@@ -50,7 +51,7 @@ public enum Sources {
         return getters;
     }
     public static Set<DictionaryGetter> getOnlineGetters(){
-        return getters;
+        return onlineGetters;
     }
 
     public static void init(){
@@ -67,6 +68,8 @@ public enum Sources {
     }
 
     public static void initOnline(){
+
+        onlineGetters.clear();
         for( Sources source : Sources.values() ){
             if(!source.isOffline) {
                 source.readOnlineSource();

@@ -1,7 +1,7 @@
 package home.fifteen.dictionary.controller;
 
 
-import home.fifteen.dictionary.dictionary.DictionaryGetter;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 import home.fifteen.dictionary.dictionary.Sources;
 import home.fifteen.dictionary.task.TaskBuilder;
 import javafx.event.ActionEvent;
@@ -46,7 +46,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
         sources.clear();
         sourceListView.getChildren().clear();
-        readAllSources();
+        readOfflineSources();
 
     }
 
@@ -67,6 +67,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
         onlineSourceHeader.setVisible(true);
         mainSplit.setDividerPositions(0.4);
 
+        readOnlineSources();
     }
 
     @FXML void download(ActionEvent event){
@@ -92,7 +93,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
 
 
-    private void readAllSources(){
+    private void readOfflineSources(){
 
         log.info("Sources : " + Sources.getGetters().toString());
         for(DictionaryGetter getter : Sources.getGetters()){
@@ -105,6 +106,25 @@ public class ChooserController implements Initializable , SceneSwitcher{
             log.fine(getter.getDictionary().toString());
         }
         sourceListView.getChildren().addAll(sources.keySet());
+
+        log.info( String.valueOf(sourceListView.getChildren().size()));
+    }
+
+    private void readOnlineSources(){
+
+        Sources.initOnline();
+
+        log.info("Sources : " + Sources.getOnlineGetters().toString());
+        for(DictionaryGetter getter : Sources.getOnlineGetters()){
+            CheckBox checkBox = new CheckBox();
+            checkBox.setSelected(true);
+            checkBox.setText(getter.getDictionary().getNameForList());
+            sourcesOnline.put(checkBox , getter);
+
+            checkBox.setOnAction((ae)->getSelectedSource());
+            log.fine(getter.getDictionary().toString());
+        }
+        onlineSourceListView.getChildren().addAll(sourcesOnline.keySet());
 
         log.info( String.valueOf(sourceListView.getChildren().size()));
     }

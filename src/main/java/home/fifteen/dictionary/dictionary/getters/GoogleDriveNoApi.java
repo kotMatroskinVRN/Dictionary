@@ -1,7 +1,10 @@
-package home.fifteen.dictionary.dictionary;
+package home.fifteen.dictionary.dictionary.getters;
 
 
 
+
+import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 
 import java.io.*;
 import java.net.*;
@@ -20,20 +23,21 @@ public class GoogleDriveNoApi implements DictionaryGetter {
     private final String FILE_ID  ;
     private final String SERVER = "https://drive.google.com/uc";
 
-    private final Dictionary dictionary;
+    private final home.fifteen.dictionary.dictionary.Dictionary dictionary;
     private URL url;
     private String fileName;
     private Long lastModified;
+    private String checkSum;
 
 
     public GoogleDriveNoApi() {
-        dictionary = new Dictionary();
+        dictionary = new home.fifteen.dictionary.dictionary.Dictionary();
 //        FILE_ID  = "1E36Ch6rdHsEeg4J7d0--X2qiy1tinIcY";
         FILE_ID  = "1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz";
     }
 
     public GoogleDriveNoApi(String FILE_ID) {
-        dictionary = new Dictionary();
+        dictionary = new home.fifteen.dictionary.dictionary.Dictionary();
         this.FILE_ID = FILE_ID;
     }
 
@@ -91,6 +95,11 @@ public class GoogleDriveNoApi implements DictionaryGetter {
     @Override
     public Long getLastModified(){
         return lastModified;
+    }
+
+    @Override
+    public String getMD5Sum() {
+        return null;
     }
 
     private void getFileInfo(){

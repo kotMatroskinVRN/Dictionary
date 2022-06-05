@@ -1,8 +1,11 @@
-package home.fifteen.dictionary.dictionary;
+package home.fifteen.dictionary.dictionary.getters;
+
+import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
+import home.fifteen.dictionary.utils.DecoderBase64;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.PropertyResourceBundle;
 
 public class FileGetterEncrypted implements DictionaryGetter {
@@ -10,27 +13,32 @@ public class FileGetterEncrypted implements DictionaryGetter {
 
     private final String FILE_ID  ;
     private final Dictionary dictionary;
-    private final File file;
+    private final DecoderBase64 decoderBase64;
+//    private final File file;
 
     public FileGetterEncrypted() {
         dictionary = new Dictionary();
-        FILE_ID = "DictionarySource/encoded_clothes.properties";
-        file = new File(FILE_ID);
+//        FILE_ID = "DictionarySource/encoded_clothes.properties";
+        FILE_ID = "encoded_0104.properties";
+//        file = new File(FILE_ID);
+        decoderBase64  = new DecoderBase64(FILE_ID);
+
     }
 
     public FileGetterEncrypted(String FILE_ID) {
         this.FILE_ID = FILE_ID;
         dictionary = new Dictionary();
-        file = new File(FILE_ID);
+        decoderBase64  = new DecoderBase64(FILE_ID);
+//        file = new File(FILE_ID);
     }
 
     @Override
     public void init() {
 
-        String string = fileToString().replace("\n" , "");
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] decodedBytes = decoder.decode(string);
-        String decodedString = new String(decodedBytes , StandardCharsets.UTF_8);
+        decoderBase64.init();
+        decoderBase64.decode();
+
+        String decodedString = decoderBase64.getDecodedString();
 
         setDictionaryName();
 
@@ -54,12 +62,17 @@ public class FileGetterEncrypted implements DictionaryGetter {
 
     @Override
     public void setDictionaryName() {
-        dictionary.setName(FILE_ID);
+        dictionary.setName(decoderBase64.getFileName());
     }
 
     @Override
     public Long getLastModified() {
-        return file.lastModified();
+        return decoderBase64.getModifiedTime();
+    }
+
+    @Override
+    public String getMD5Sum() {
+        return decoderBase64.getCheckSum();
     }
 
 

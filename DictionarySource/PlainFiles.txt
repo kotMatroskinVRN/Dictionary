@@ -1,1 +1,0 @@
-DictionarySource/2018.properties

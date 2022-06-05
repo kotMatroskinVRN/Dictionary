@@ -112,6 +112,7 @@ public class Main extends Application  {
 
         if(factor) {
             EncoderBase64 encoder = new EncoderBase64(fileName);
+            encoder.initFileInfo();
             encoder.encode();
 
         }else{
