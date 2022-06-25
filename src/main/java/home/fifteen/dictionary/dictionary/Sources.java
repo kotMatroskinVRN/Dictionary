@@ -90,10 +90,11 @@ public enum Sources {
         for (String line : fileToString().split("\n")){
             DictionaryGetter getter = getGetter(line);
             getter.init();
+
             File file = new File(line);
-            if(file.isFile()) {
-                getter.getDictionary().setName(file.getName());
-            }
+//            if(file.isFile()) {
+//                getter.getDictionary().setName(file.getName());
+//            }
             getters.add(getter);
         }
 

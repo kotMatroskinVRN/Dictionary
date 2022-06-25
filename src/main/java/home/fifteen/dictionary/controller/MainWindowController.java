@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -39,6 +40,8 @@ public class MainWindowController implements Initializable , SceneSwitcher {
     private HBox bottomPane;
     @FXML
     private BorderPane borderPane;
+    @FXML
+    Tooltip tooltip;
 
     private Task task;
     private TaskBuilder taskBuilder ;
@@ -54,8 +57,9 @@ public class MainWindowController implements Initializable , SceneSwitcher {
 
         if(taskBuilder!=null){
             makeTask();
-
+            tooltip.setText(taskBuilder.getGettersToolTip());
         }
+
 
 
     }
@@ -103,6 +107,7 @@ public class MainWindowController implements Initializable , SceneSwitcher {
     @Override
     public void setTaskBuilder(TaskBuilder taskBuilder) {
         this.taskBuilder = taskBuilder;
+        tooltip.setText(taskBuilder.getGettersToolTip());
         log.info(taskBuilder.toString());
 
         makeTask();

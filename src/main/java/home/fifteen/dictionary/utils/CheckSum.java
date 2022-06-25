@@ -12,7 +12,7 @@ public class CheckSum {
     private final File file;
 
     public CheckSum(){
-        file = new File("DictionarySource/0104.properties");
+        file = new File("DictionarySource/encoded_0104.properties");
     }
 
     public CheckSum(File file){

@@ -10,6 +10,7 @@
 
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Tooltip?>
 <BorderPane prefHeight="560.0" prefWidth="320.0"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -18,7 +19,6 @@
     <top>
         <FlowPane>
             <Button text="Internet" fx:id="internetSource" onAction="#getOnlineSources"/>
-            <Button text="Download" fx:id="download" onAction="#download" />
         </FlowPane>
     </top>
     <center>
@@ -32,6 +32,7 @@
            </HBox>
            <SplitPane>
                <VBox fx:id="onlineSourceListView"/>
+               <tooltip><Tooltip fx:id="tooltip" text="Blue - newer\nGreen - equal\nRed - older" wrapText="true" /></tooltip>
            </SplitPane>
        </SplitPane>
 

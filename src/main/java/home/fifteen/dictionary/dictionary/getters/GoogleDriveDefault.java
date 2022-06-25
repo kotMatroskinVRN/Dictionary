@@ -24,7 +24,6 @@ import com.google.api.services.drive.model.File;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 
 
 public class GoogleDriveDefault implements DictionaryGetter {
@@ -36,6 +35,7 @@ public class GoogleDriveDefault implements DictionaryGetter {
 
     private final home.fifteen.dictionary.dictionary.Dictionary dictionary;
     private File file ;
+    private boolean downloadable = false;
 
     public GoogleDriveDefault() {
         dictionary = new home.fifteen.dictionary.dictionary.Dictionary();
@@ -56,6 +56,16 @@ public class GoogleDriveDefault implements DictionaryGetter {
     @Override
     public String getMD5Sum() {
         return file.getMd5Checksum();
+    }
+
+    @Override
+    public boolean isDownloadable() {
+        return downloadable;
+    }
+
+    @Override
+    public void setDownloadable(boolean downloadable) {
+        this.downloadable = downloadable;
     }
 
     @Override

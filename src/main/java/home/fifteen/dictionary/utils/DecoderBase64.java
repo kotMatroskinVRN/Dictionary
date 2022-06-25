@@ -13,7 +13,7 @@ public class DecoderBase64 {
 
     private final String SOURCE;
 
-    private String fileName;
+    private String name;
     private String codedText;
     private String checkSum;
     private long modifiedTime;
@@ -31,8 +31,8 @@ public class DecoderBase64 {
         getFileData();
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
     public String getCheckSum() {
@@ -80,7 +80,7 @@ public class DecoderBase64 {
 
             switch(name){
                 case "Name":
-                    fileName = value;
+                    this.name = value;
                     break;
                 case "Modified":
                     modifiedTime = Long.parseLong(value);
@@ -105,7 +105,7 @@ public class DecoderBase64 {
         String line;
         line = String.format(format , "Source" , SOURCE);
         result.append(line);
-        line = String.format(format , "File Name" , fileName);
+        line = String.format(format , "File Name" , name);
         result.append(line);
         line = String.format(format , "MD5SUM" , checkSum);
         result.append(line);

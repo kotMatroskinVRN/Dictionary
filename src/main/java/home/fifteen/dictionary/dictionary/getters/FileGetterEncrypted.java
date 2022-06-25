@@ -1,7 +1,6 @@
 package home.fifteen.dictionary.dictionary.getters;
 
 import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 import home.fifteen.dictionary.utils.DecoderBase64;
 
 import java.io.*;
@@ -62,7 +61,9 @@ public class FileGetterEncrypted implements DictionaryGetter {
 
     @Override
     public void setDictionaryName() {
-        dictionary.setName(decoderBase64.getFileName());
+        dictionary.setName(decoderBase64.getName());
+        log.info("Setting name for Dictionary " + dictionary.getName());
+        log.info("Setting dictionary name fo GUI usage " + dictionary.getNameForList());
     }
 
     @Override
@@ -73,6 +74,16 @@ public class FileGetterEncrypted implements DictionaryGetter {
     @Override
     public String getMD5Sum() {
         return decoderBase64.getCheckSum();
+    }
+
+    @Override
+    public boolean isDownloadable() {
+        return false;
+    }
+
+    @Override
+    public void setDownloadable(boolean downloadable) {
+
     }
 
 

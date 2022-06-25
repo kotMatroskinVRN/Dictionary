@@ -1,6 +1,7 @@
 package home.fifteen.dictionary.controller;
 
 
+import home.fifteen.dictionary.dictionary.DictionaryGetterComparator;
 import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 import home.fifteen.dictionary.dictionary.Sources;
 import home.fifteen.dictionary.task.TaskBuilder;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,11 +27,11 @@ public class ChooserController implements Initializable , SceneSwitcher{
     @FXML
     Button internetSource;
     @FXML
-    Button download;
-    @FXML
     Label onlineSourceHeader;
     @FXML
     SplitPane mainSplit;
+    @FXML
+    Tooltip tooltip;
 
     private Initializable mainWindowController;
     private Scene main;
@@ -41,14 +43,16 @@ public class ChooserController implements Initializable , SceneSwitcher{
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         onlineSourceHeader.setVisible(false);
-        download.setDisable(true);
         mainSplit.setDividerPositions(0.9);
 
         sources.clear();
         sourceListView.getChildren().clear();
         readOfflineSources();
 
+        parseTooltip();
+
     }
+
 
 
     @FXML
@@ -59,6 +63,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
         Node    node = (Node) event.getSource();
         Stage window = (Stage)( node.getScene().getWindow() );
         window.setScene(main);
+        onlineSourceListView.getChildren().clear();
         mainWindowController.initialize(null,null);
     }
 
@@ -69,10 +74,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
         readOnlineSources();
     }
-
-    @FXML void download(ActionEvent event){
-
-    }
+    
 
     @Override
     public void setSecondaryController(Initializable mainWindowController){
@@ -100,6 +102,8 @@ public class ChooserController implements Initializable , SceneSwitcher{
             CheckBox checkBox = new CheckBox();
             checkBox.setSelected(true);
             checkBox.setText(getter.getDictionary().getNameForList());
+            log.info( "Reading Dictionary name from DATA " + getter.getDictionary().getNameForList());
+            log.info( "Reading Dictionary name from GUI " + checkBox.getText());
             sources.put(checkBox , getter);
 
             checkBox.setOnAction((ae)->getSelectedSource());
@@ -121,13 +125,52 @@ public class ChooserController implements Initializable , SceneSwitcher{
             checkBox.setText(getter.getDictionary().getNameForList());
             sourcesOnline.put(checkBox , getter);
 
+            highLightOnlineDictionaries();
+
             checkBox.setOnAction((ae)->getSelectedSource());
             log.fine(getter.getDictionary().toString());
         }
+        onlineSourceListView.getChildren().clear();
         onlineSourceListView.getChildren().addAll(sourcesOnline.keySet());
+
+
 
         log.info( String.valueOf(sourceListView.getChildren().size()));
     }
+
+    private void highLightOnlineDictionaries() {
+
+        for( CheckBox checkBox : sourcesOnline.keySet()){
+            DictionaryGetter onlineGetter = sourcesOnline.get(checkBox);
+            for( DictionaryGetter offlineGetter : Sources.getGetters()){
+
+                DictionaryGetterComparator comparator =
+                        new DictionaryGetterComparator( onlineGetter , offlineGetter );
+                comparator.compare();
+
+                if(onlineGetter.isDownloadable()){
+                    checkBox.setId("newerDictionary");
+                    checkBox.applyCss();
+                    checkBox.setSelected(false);
+                }
+                if(comparator.isEqual()){
+                    checkBox.setId("equalDictionary");
+                    checkBox.applyCss();
+                    checkBox.setSelected(false);
+                }else{
+                    if(comparator.isSameName() && !comparator.isFirstNewer() ){
+                        checkBox.setId("olderDictionary");
+                        checkBox.applyCss();
+                        checkBox.setSelected(false);
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
 
     private void getSelectedSource(){
         Set<DictionaryGetter> getters = new HashSet<>();
@@ -140,8 +183,19 @@ public class ChooserController implements Initializable , SceneSwitcher{
                 log.info(checkBox.getText());
             }
         }
-        log.info("getters number : " + getters.size());
+        log.info("Offline getters number : " + getters.size());
+
+        for(CheckBox checkBox : sourcesOnline.keySet()){
+
+            if(checkBox.isSelected()){
+                getters.add(sources.get(checkBox));
+                log.info(checkBox.getText());
+            }
+        }
+        log.info("Online getters number : " + getters.size());
+
         log.fine(taskBuilder.toString());
+
 
         if(getters.size()==0){
             for(CheckBox checkBox : sources.keySet()){
@@ -153,5 +207,12 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
         taskBuilder.setGetters(getters);
         log.fine(taskBuilder.toString());
+    }
+
+
+    private void parseTooltip() {
+        String string = tooltip.getText();
+        string = string.replaceAll("\\\\n" , "\n");
+        tooltip.setText(string);
     }
 }

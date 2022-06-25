@@ -17,6 +17,8 @@ public interface DictionaryGetter {
     void setDictionaryName();
     Long getLastModified();
     String getMD5Sum();
+    boolean isDownloadable();
+    void setDownloadable(boolean downloadable);
 
     default String parseKey(String key){
         return key.replaceAll("\\." , " ");

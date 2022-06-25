@@ -67,7 +67,7 @@
                 <version>3.0.0-M5</version>
                 <configuration>
                     <includes>
-                        <include>home.battleShips.**</include>
+                        <include>home.fifteen.**</include>
                     </includes>
                 </configuration>
             </plugin>

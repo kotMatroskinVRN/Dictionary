@@ -66,5 +66,15 @@ public class FileGetter implements DictionaryGetter {
         return null;
     }
 
+    @Override
+    public boolean isDownloadable() {
+        return false;
+    }
+
+    @Override
+    public void setDownloadable(boolean downloadable) {
+
+    }
+
 
 }

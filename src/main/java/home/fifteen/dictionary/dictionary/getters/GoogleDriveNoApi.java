@@ -102,6 +102,16 @@ public class GoogleDriveNoApi implements DictionaryGetter {
         return null;
     }
 
+    @Override
+    public boolean isDownloadable() {
+        return false;
+    }
+
+    @Override
+    public void setDownloadable(boolean downloadable) {
+
+    }
+
     private void getFileInfo(){
 
         try {

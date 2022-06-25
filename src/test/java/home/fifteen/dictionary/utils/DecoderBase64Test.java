@@ -1,11 +1,7 @@
 package home.fifteen.dictionary.utils;
 
-import home.fifteen.dictionary.Main;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,8 +15,8 @@ class DecoderBase64Test {
     }
 
     @Test
-    void getFileName() {
-        assertEquals("0104.properties" , decoderBase64.getFileName());
+    void getName() {
+        assertEquals("0104.properties" , decoderBase64.getName());
     }
 
     @Test

@@ -37,4 +37,12 @@ public class TaskBuilder {
         init();
     }
 
+    public String getGettersToolTip(){
+        StringBuilder result = new StringBuilder();
+        for(DictionaryGetter getter : getters){
+            result.append(getter.getDictionary().getNameForList()).append("\n");
+        }
+        return result.toString();
+    }
+
 }
