@@ -1,28 +1,36 @@
 package home.fifteen.dictionary.utils;
 
 import home.fifteen.dictionary.Main;
+import home.fifteen.dictionary.dictionary.Sources;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Base64;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class EncoderBase64 {
 
-    private Logger log = Main.getLog();
+    private final Logger LOGGER = Main.getLogger();
 
     private final String fileName;
+    private final String outFileName;
     private String codedText;
     private String checkSum;
     private long modifiedTime;
 
     public EncoderBase64() {
         fileName = "clothes.properties";
+        outFileName = Settings.DICTIONARY_DIRECTORY.getProperty() + "/encoded_" + fileName;
     }
 
     public EncoderBase64(String fileName) {
         this.fileName = fileName;
-
+        outFileName = Settings.DICTIONARY_DIRECTORY.getProperty() + "/encoded_" + fileName;
     }
 
     public void initFileInfo(){
@@ -47,23 +55,46 @@ public class EncoderBase64 {
 
     public void encode(){
 
-        String string = fileToString();
-        log.finest(string);
+        String string = fileToString(fileName);
+        LOGGER.finest(string);
         Base64.Encoder encoder = Base64.getEncoder();
         codedText = encoder.encodeToString(string.getBytes(StandardCharsets.UTF_8));
 //        Base64.Decoder decoder = Base64.getDecoder();
-        stringToFile();
-        log.finest(codedText);
+        stringToFile(outFileName , getContent());
+        LOGGER.finest(codedText);
+        updateSourceDictionaryFile();
+    }
+
+    private void updateSourceDictionaryFile() {
+        File      file = new File(Sources.ENCRYPTED.getFileName());
+
+
+        try {
+            Files.write( file.toPath() ,        "\n".getBytes(), StandardOpenOption.APPEND);
+            Files.write( file.toPath() , outFileName.getBytes(), StandardOpenOption.APPEND);
+        }
+        catch (IOException e) {
+            LOGGER.severe(e.getMessage());
+        }
+
+        String content = fileToString(Sources.ENCRYPTED.getFileName());
+
+        // Unify lines in EncryptedFiles.txt
+        Set<String> lines = new HashSet<>(List.of(content.split("\n")));
+
+        String result = String.join("\n" , lines);
+        LOGGER.finest(result);
+
+        stringToFile(Sources.ENCRYPTED.getFileName() , result );
 
     }
 
 
-
-    private String fileToString() {
+    private String fileToString(String inputFileName) {
         StringBuilder result = new StringBuilder();
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFileName), StandardCharsets.UTF_8));
             String line = reader.readLine();
             while (line != null) {
                 result.append(line);
@@ -75,26 +106,24 @@ public class EncoderBase64 {
         return "missed";
     }
 
-    private void stringToFile(){
-        String outFileName = "encoded_" + fileName;
-        String        text = getContent();
+    private void stringToFile(String output , String content){
+        //String        text = getContent();
 
         try {
-            FileWriter     writer = new FileWriter(outFileName, false)	 ;
+            FileWriter     writer = new FileWriter(output, false)	 ;
             (new File(fileName)).deleteOnExit();
-            writer.write(text) ; writer.close() ;
+            writer.write(content) ; writer.close() ;
         } catch (IOException e) { e.printStackTrace();}
 
     }
 
     private String getContent(){
-        StringBuilder result = new StringBuilder();
-        result.append("Name = ").append(fileName).append("\n");
-        result.append("Modified = ").append(modifiedTime).append("\n");
-        result.append("checkSum = ").append(checkSum).append("\n");
-        result.append("code = ").append(codedText).append("\n");
+        String result = "Name = " + fileName + "\n" +
+                "Modified = " + modifiedTime + "\n" +
+                "checkSum = " + checkSum + "\n" +
+                "code = " + codedText + "\n";
 
-        return result.toString();
+        return result;
     }
 
     private void createTextFile(String fileName , String text){

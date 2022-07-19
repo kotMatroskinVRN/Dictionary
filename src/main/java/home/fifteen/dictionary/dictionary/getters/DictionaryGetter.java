@@ -4,15 +4,16 @@ package home.fifteen.dictionary.dictionary.getters;
 import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.Dictionary;
 
-import java.io.File;
+import java.io.Serializable;
 import java.util.logging.Logger;
 
-public interface DictionaryGetter {
+public interface DictionaryGetter extends Serializable {
 
-    Logger log = Main.getLog();
+    Logger log = Main.getLogger();
 
 
     void init();
+    String getID();
     Dictionary getDictionary();
     void setDictionaryName();
     Long getLastModified();

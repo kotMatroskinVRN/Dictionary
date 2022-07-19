@@ -2,6 +2,7 @@ package home.fifteen.dictionary.dictionary;
 
 import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.getters.*;
+import home.fifteen.dictionary.utils.Settings;
 
 import java.io.*;
 import java.util.HashSet;
@@ -10,40 +11,40 @@ import java.util.logging.Logger;
 
 public enum Sources {
 
-//    GOOGLE_DRIVE_NOAPI("DictionarySource/GoogleDrive.txt" , false){
+//    GOOGLE_DRIVE_NOAPI("GoogleDrive.txt" , false){
 //        @Override
 //        DictionaryGetter getGetter(String name) {
 //            return new GoogleDriveNoApi(name);
 //        }
 //    },
-    GOOGLE_DRIVE("DictionarySource/GoogleDrive.txt", false){
+    GOOGLE_DRIVE("GoogleDrive.txt", false){
         @Override
         DictionaryGetter getGetter(String name) {
             return new GoogleDriveDefault(name);
         }
     },
-    ENCRYPTED("DictionarySource/EncryptedFiles.txt" , true){
+    ENCRYPTED("EncryptedFiles.txt" , true){
         @Override
         DictionaryGetter getGetter(String name) {
             return new FileGetterEncrypted(name);
         }
     },
-//    PLAIN("DictionarySource/PlainFiles.txt" , true){
-//        @Override
-//        DictionaryGetter getGetter(String name) {
-//            return new FileGetter(name);
-//        }
-//    },
+    PLAIN("PlainFiles.txt" , true){
+        @Override
+        DictionaryGetter getGetter(String name) {
+            return new FileGetter(name);
+        }
+    },
     ;
 
-    private final Logger log = Main.getLog();
+    private final Logger log = Main.getLogger();
     private static final Set<DictionaryGetter> getters = new HashSet<>();
     private static final Set<DictionaryGetter> onlineGetters = new HashSet<>();
     private final String fileName;
     private final boolean isOffline;
 
     Sources(String fileName , boolean isOffline){
-        this.fileName = fileName;
+        this.fileName = Settings.DICTIONARY_DIRECTORY.getProperty() + "/" + fileName;
         this.isOffline = isOffline;
     }
 
@@ -52,6 +53,9 @@ public enum Sources {
     }
     public static Set<DictionaryGetter> getOnlineGetters(){
         return onlineGetters;
+    }
+    public String getFileName(){
+        return fileName;
     }
 
     public static void init(){

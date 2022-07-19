@@ -2,8 +2,10 @@ package home.fifteen.dictionary;
 
 import home.fifteen.dictionary.controller.SceneSwitcher;
 import home.fifteen.dictionary.dictionary.*;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 import home.fifteen.dictionary.task.TaskBuilder;
 import home.fifteen.dictionary.utils.EncoderBase64;
+import home.fifteen.dictionary.utils.Settings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,14 +15,16 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Objects;
+import java.io.ObjectInputStream;
+import java.util.*;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class Main extends Application  {
 
-    private final static Logger log = Logger.getLogger(ClassLoader.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ClassLoader.class.getName());
 
     private final static String FXML = "MainWindow.fxml";
     private final static String CHOOSER = "ChooseDictionary.fxml";
@@ -69,6 +73,31 @@ public class Main extends Application  {
 
             Sources.init();
             TaskBuilder taskBuilder = new TaskBuilder(Sources.getGetters());
+            final String FILE_NAME_SERIALIZABLE = Settings.FILE_NAME_SERIALIZABLE.getProperty();
+            File file = new File(FILE_NAME_SERIALIZABLE);
+            if(file.exists()){
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(FILE_NAME_SERIALIZABLE);
+                    ObjectInputStream ois = new ObjectInputStream(fileInputStream);
+                    Set<DictionaryGetter> serializedGetters = new HashSet<>();
+                    serializedGetters.addAll((HashSet<DictionaryGetter>) ois.readObject());
+                    ois.close();
+                    LOGGER.info("have been read");
+                    Set<DictionaryGetter> getters = new HashSet<>();
+                    for (DictionaryGetter serializedGetter : serializedGetters) {
+                        for(DictionaryGetter sourceGetter : Sources.getGetters()){
+                            if(serializedGetter.getID().equals(sourceGetter.getID())){
+                                getters.add(sourceGetter);
+                            }
+                        }
+                    }
+                    taskBuilder = new TaskBuilder(getters);
+
+                }catch (ClassNotFoundException e) {
+                    LOGGER.severe("Can not get access to " + FILE_NAME_SERIALIZABLE);
+                }
+            }
+
             taskBuilder.init();
 
             loader = new FXMLLoader();
@@ -120,14 +149,14 @@ public class Main extends Application  {
                     "\nWrong File Name : %s\nPlease specify file name from working directory." ,
                     fileName
             );
-            log.severe( string );
+            LOGGER.severe( string );
         }
 
         System.exit(0);
     }
 
-    public static Logger getLog(){
-        return log;
+    public static Logger getLogger(){
+        return LOGGER;
     }
 
 }

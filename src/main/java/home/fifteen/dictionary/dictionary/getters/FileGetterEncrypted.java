@@ -2,6 +2,7 @@ package home.fifteen.dictionary.dictionary.getters;
 
 import home.fifteen.dictionary.dictionary.Dictionary;
 import home.fifteen.dictionary.utils.DecoderBase64;
+import home.fifteen.dictionary.utils.Settings;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -9,25 +10,27 @@ import java.util.PropertyResourceBundle;
 
 public class FileGetterEncrypted implements DictionaryGetter {
 
+    private transient final String DICTIONARY_DIRECTORY =
+            Settings.DICTIONARY_DIRECTORY.getProperty();
 
     private final String FILE_ID  ;
-    private final Dictionary dictionary;
-    private final DecoderBase64 decoderBase64;
+    private transient final Dictionary dictionary;
+    private transient final DecoderBase64 decoderBase64;
 //    private final File file;
 
     public FileGetterEncrypted() {
         dictionary = new Dictionary();
 //        FILE_ID = "DictionarySource/encoded_clothes.properties";
-        FILE_ID = "encoded_0104.properties";
+        FILE_ID = DICTIONARY_DIRECTORY + "/encoded_0104.properties";
 //        file = new File(FILE_ID);
-        decoderBase64  = new DecoderBase64(FILE_ID);
+        decoderBase64  = new DecoderBase64(this.FILE_ID);
 
     }
 
     public FileGetterEncrypted(String FILE_ID) {
-        this.FILE_ID = FILE_ID;
+        this.FILE_ID = DICTIONARY_DIRECTORY + "/" + FILE_ID;
         dictionary = new Dictionary();
-        decoderBase64  = new DecoderBase64(FILE_ID);
+        decoderBase64  = new DecoderBase64(this.FILE_ID);
 //        file = new File(FILE_ID);
     }
 
@@ -52,6 +55,11 @@ public class FileGetterEncrypted implements DictionaryGetter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getID() {
+        return FILE_ID;
     }
 
     @Override

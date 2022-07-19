@@ -29,13 +29,13 @@ import home.fifteen.dictionary.dictionary.Dictionary;
 public class GoogleDriveDefault implements DictionaryGetter {
 
     private final String FILE_ID  ;
-    private final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+    private transient final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
 
 
-    private final home.fifteen.dictionary.dictionary.Dictionary dictionary;
-    private File file ;
-    private boolean downloadable = false;
+    private transient final home.fifteen.dictionary.dictionary.Dictionary dictionary;
+    private transient File file ;
+    private transient boolean downloadable = false;
 
     public GoogleDriveDefault() {
         dictionary = new home.fifteen.dictionary.dictionary.Dictionary();
@@ -97,6 +97,11 @@ public class GoogleDriveDefault implements DictionaryGetter {
         } catch (IOException  | GeneralSecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getID() {
+        return FILE_ID;
     }
 
     @Override

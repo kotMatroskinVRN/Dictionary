@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class Task {
 
-    private final Logger log = Main.getLog();
+    private final Logger log = Main.getLogger();
 
     private final Map<String,String> words ;
     private final ArrayList<String> answers ;

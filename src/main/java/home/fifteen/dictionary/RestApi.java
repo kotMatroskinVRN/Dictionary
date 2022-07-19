@@ -1,7 +1,9 @@
 package home.fifteen.dictionary;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.PropertyResourceBundle;
 
 public class RestApi {
@@ -15,8 +17,9 @@ public class RestApi {
 
         try {
             URL url = new URL(restApi.URL_NAME + restApi.FILE_ID);
-            PropertyResourceBundle prb ;
-            prb = new PropertyResourceBundle(url.openStream());
+
+            InputStreamReader is = new InputStreamReader(url.openStream() , StandardCharsets.UTF_8) ;
+            PropertyResourceBundle prb = new PropertyResourceBundle(is  );
 
             for (String key : prb.keySet()) {
                 System.out.printf("%-20s%s\n", key, prb.getString(key));

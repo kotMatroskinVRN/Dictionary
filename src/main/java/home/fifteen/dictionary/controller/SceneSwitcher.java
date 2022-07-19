@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public interface SceneSwitcher {
 
-    Logger log = Main.getLog();
+    Logger log = Main.getLogger();
 
     void setSecondaryScene(Scene scene);
     void setSecondaryController(Initializable controller);

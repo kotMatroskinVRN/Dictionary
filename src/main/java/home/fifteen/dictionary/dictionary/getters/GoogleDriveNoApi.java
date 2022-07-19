@@ -70,6 +70,10 @@ public class GoogleDriveNoApi implements DictionaryGetter {
         }
     }
 
+    @Override
+    public String getID() {
+        return FILE_ID;
+    }
 
 
     @Override

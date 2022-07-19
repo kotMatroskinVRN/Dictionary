@@ -1,9 +1,12 @@
 package home.fifteen.dictionary.dictionary;
 
+import java.io.Serializable;
+
 public class Word {
 
     private String word;
     private String description;
+    private int    weight;
 
     public Word(String word, String description) {
         this.word = word;

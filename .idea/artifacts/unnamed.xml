@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="unnamed">
+    <output-path>$PROJECT_DIR$/out/artifacts/unnamed</output-path>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/target/Dictionary-1.0-SNAPSHOT.jar" />
+    </root>
+  </artifact>
+</component>

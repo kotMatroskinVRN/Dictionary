@@ -115,6 +115,7 @@ public class MainWindowController implements Initializable , SceneSwitcher {
 
 
     private void makeTask(){
+
         task = this.taskBuilder.getTask();
         task.prepareTask();
         log.info(task.toString());

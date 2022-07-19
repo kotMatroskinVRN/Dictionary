@@ -1,11 +1,17 @@
 package home.fifteen.dictionary.task;
 
+import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
+import home.fifteen.dictionary.utils.Settings;
 
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class TaskBuilder {
+
+    private final Logger LOGGER = Main.getLogger();
 
     private final Set<DictionaryGetter> getters ;
     private Task task;
@@ -15,13 +21,30 @@ public class TaskBuilder {
         this.getters = new HashSet<>(getters);
 //        this.getters = getters;
         task = new Task();
+
     }
 
     public void init(){
 
-        for(DictionaryGetter getter : getters){
-//            getter.init();
-            task.addDictionary(getter.getDictionary());
+        try {
+            final String FILE_NAME_SERIALIZABLE = Settings.FILE_NAME_SERIALIZABLE.getProperty();
+            FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME_SERIALIZABLE);
+            ObjectOutputStream oos = new ObjectOutputStream( fileOutputStream );
+
+
+            for(DictionaryGetter getter : getters){
+                LOGGER.info(getter.getDictionary().getNameForList());
+                task.addDictionary(getter.getDictionary());
+            }
+            oos.writeObject(getters);
+
+            oos.close();
+
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
