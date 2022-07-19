@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public class EncoderBase64 {
 
     private final Logger LOGGER = Main.getLogger();
+    private final String PREFIX = "encoded_";
 
     private final String fileName;
     private final String outFileName;
@@ -25,12 +26,12 @@ public class EncoderBase64 {
 
     public EncoderBase64() {
         fileName = "clothes.properties";
-        outFileName = Settings.DICTIONARY_DIRECTORY.getProperty() + "/encoded_" + fileName;
+        outFileName = Settings.DICTIONARY_DIRECTORY.getProperty() + "/" + PREFIX + fileName;
     }
 
     public EncoderBase64(String fileName) {
         this.fileName = fileName;
-        outFileName = Settings.DICTIONARY_DIRECTORY.getProperty() + "/encoded_" + fileName;
+        outFileName = Settings.DICTIONARY_DIRECTORY.getProperty() + "/" + PREFIX + this.fileName;
     }
 
     public void initFileInfo(){
@@ -71,7 +72,7 @@ public class EncoderBase64 {
 
         try {
             Files.write( file.toPath() ,        "\n".getBytes(), StandardOpenOption.APPEND);
-            Files.write( file.toPath() , outFileName.getBytes(), StandardOpenOption.APPEND);
+            Files.write( file.toPath() , (PREFIX+fileName).getBytes(), StandardOpenOption.APPEND);
         }
         catch (IOException e) {
             LOGGER.severe(e.getMessage());
