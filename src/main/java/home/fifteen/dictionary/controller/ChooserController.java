@@ -46,7 +46,9 @@ public class ChooserController implements Initializable , SceneSwitcher{
         mainSplit.setDividerPositions(0.9);
 
         sources.clear();
+        sourcesOnline.clear();
         sourceListView.getChildren().clear();
+        onlineSourceListView.getChildren().clear();
         readOfflineSources();
 
         parseTooltip();
@@ -188,7 +190,8 @@ public class ChooserController implements Initializable , SceneSwitcher{
         for(CheckBox checkBox : sourcesOnline.keySet()){
 
             if(checkBox.isSelected()){
-                getters.add(sources.get(checkBox));
+                DictionaryGetter getter = sourcesOnline.get(checkBox);
+                getters.add(getter);
                 log.info(checkBox.getText());
             }
         }
@@ -206,6 +209,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
         }
 
         taskBuilder.setGetters(getters);
+
         log.fine(taskBuilder.toString());
     }
 

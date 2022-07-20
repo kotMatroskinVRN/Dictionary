@@ -73,30 +73,31 @@ public class Main extends Application  {
 
             Sources.init();
             TaskBuilder taskBuilder = new TaskBuilder(Sources.getGetters());
-            final String FILE_NAME_SERIALIZABLE = Settings.FILE_NAME_SERIALIZABLE.getProperty();
-            File file = new File(FILE_NAME_SERIALIZABLE);
-            if(file.exists()){
-                try {
-                    FileInputStream fileInputStream = new FileInputStream(FILE_NAME_SERIALIZABLE);
-                    ObjectInputStream ois = new ObjectInputStream(fileInputStream);
-                    Set<DictionaryGetter> serializedGetters = new HashSet<>();
-                    serializedGetters.addAll((HashSet<DictionaryGetter>) ois.readObject());
-                    ois.close();
-                    LOGGER.info("have been read");
-                    Set<DictionaryGetter> getters = new HashSet<>();
-                    for (DictionaryGetter serializedGetter : serializedGetters) {
-                        for(DictionaryGetter sourceGetter : Sources.getGetters()){
-                            if(serializedGetter.getID().equals(sourceGetter.getID())){
-                                getters.add(sourceGetter);
-                            }
-                        }
-                    }
-                    taskBuilder = new TaskBuilder(getters);
-
-                }catch (ClassNotFoundException e) {
-                    LOGGER.severe("Can not get access to " + FILE_NAME_SERIALIZABLE);
-                }
-            }
+//            final String FILE_NAME_SERIALIZABLE = Settings.FILE_NAME_SERIALIZABLE.getProperty();
+//            File file = new File(FILE_NAME_SERIALIZABLE);
+//            if(file.exists()){
+//                try {
+//                    FileInputStream fileInputStream = new FileInputStream(FILE_NAME_SERIALIZABLE);
+//                    ObjectInputStream ois = new ObjectInputStream(fileInputStream);
+//                    Set<DictionaryGetter> serializedGetters = new HashSet<>();
+//                    serializedGetters.addAll((HashSet<DictionaryGetter>) ois.readObject());
+//                    ois.close();
+//                    LOGGER.info("have been read");
+//                    Set<DictionaryGetter> getters = new HashSet<>();
+//                    for (DictionaryGetter serializedGetter : serializedGetters) {
+//                        for(DictionaryGetter sourceGetter : Sources.getGetters()){
+//                            if(serializedGetter.getID().equals(sourceGetter.getID())){
+//                                getters.add(sourceGetter);
+//                            }
+//                        }
+//                    }
+//                    taskBuilder = new TaskBuilder(getters);
+//
+//                }catch (ClassNotFoundException e) {
+//                    LOGGER.severe("Can not get access to " + FILE_NAME_SERIALIZABLE);
+//                    taskBuilder = new TaskBuilder(Sources.getGetters());
+//                }
+//            }
 
             taskBuilder.init();
 
