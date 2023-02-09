@@ -4,15 +4,15 @@ import java.util.*;
 
 public class Dictionary {
 
-    private final Map<String,String> words = new HashMap<>();
+    private final List<Word> words = new ArrayList<>();
 
     private String name ;
 
-    public void addWord(String word , String description){
-        words.put( word,description );
+    public void addWord(Word word){
+        words.add( word );
     }
 
-    public Map<String, String> getWords() {
+    public List<Word> getWords() {
         return words;
     }
 
@@ -21,7 +21,7 @@ public class Dictionary {
     }
     public String getNameForList() {
         return name.replaceAll("_" , " ")
-                .replaceAll(".properties" , "");
+                .replaceAll(".dct" , "");
     }
 
 
@@ -37,8 +37,8 @@ public class Dictionary {
         StringBuilder result = new StringBuilder(name + " :\n");
         String format = "%-40s%s\n";
 
-        for (String key : words.keySet()) {
-            String string  = String.format(format , key , words.get(key));
+        for (Word word : words) {
+            String string  = String.format(format , word.getWord() , word.getDescription());
             result.append(string);
         }
 

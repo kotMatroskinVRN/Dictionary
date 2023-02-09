@@ -2,6 +2,7 @@ package home.fifteen.dictionary.task;
 
 import home.fifteen.dictionary.dictionary.Dictionary;
 import home.fifteen.dictionary.Main;
+import home.fifteen.dictionary.dictionary.Word;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -10,15 +11,15 @@ public class Task {
 
     private final Logger log = Main.getLogger();
 
-    private final Map<String,String> words ;
+    private final List<Word> words ;
     private final ArrayList<String> answers ;
-
-    private String task , correctAnswer;
+    private Word task ;
+    private String  correctAnswer;
     private int correctAnswers , correctAnswersInARow;
 
 
     public Task(){
-        words = new HashMap<>();
+        words = new ArrayList<>();
         answers = new ArrayList<>();
 //        words.clear();
         correctAnswers = 0;
@@ -28,13 +29,13 @@ public class Task {
 
 
     public void addDictionary(Dictionary dictionary){
-        for(String key : dictionary.getWords().keySet()){
-            if(words.containsKey(key)){
+        for(Word word : dictionary.getWords()){
+            if(words.contains(word)){
                 log.warning(
-                        String.format("word %s exists with meaning %s. Will be skipped" , key , words.get(key) )
+                        String.format("word %s exists with meaning %s. Will be skipped" , word.getWord() , word.getDescription() )
                 );
             }else {
-                words.put(key, dictionary.getWords().get(key));
+                words.add(word);
             }
         }
 
@@ -44,7 +45,7 @@ public class Task {
         task = getRandomWord();
         makeAnswers();
     }
-    public String getTask(){
+    public Word getTask(){
         return task;
     }
     public ArrayList<String> getAnswers(){
@@ -54,7 +55,7 @@ public class Task {
         return correctAnswer;
     }
     public boolean checkAnswer(String description){
-        boolean factor = words.get(task).equals(description);
+        boolean factor = task.getDescription().equals(description);
 
         if(factor){
             correctAnswers++;
@@ -88,14 +89,13 @@ public class Task {
             answers.clear();
         }
 
-        correctAnswer = words.get(task);
+        correctAnswer = task.getDescription();
         answers.add( correctAnswer );
 
         for(int i=0;i<4;i++){
-            String description = words.get(getRandomWord());
-            while( words.size()>4 &&
-                    answers.contains(description) ){
-                description = words.get(getRandomWord());
+            String description = getRandomWord().getDescription();
+            while( words.size()>4 && answers.contains(description) ){
+                description = getRandomWord().getDescription();
             }
             answers.add(description);
 
@@ -105,16 +105,15 @@ public class Task {
 
     }
 
-    private String getRandomWord(){
+    private Word getRandomWord(){
         int number = (int)(Math.random()*words.size());
-        ArrayList<String> keys = new ArrayList(words.keySet());
-        return keys.get(number);
+        return words.get(number);
 
     }
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder(task);
+        StringBuilder result = new StringBuilder(task.getWord());
         result.append("\n");
         String format = "%-40s%s\n";
 

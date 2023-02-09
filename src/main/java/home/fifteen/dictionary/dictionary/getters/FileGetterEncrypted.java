@@ -1,12 +1,13 @@
 package home.fifteen.dictionary.dictionary.getters;
 
 import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.Word;
 import home.fifteen.dictionary.utils.DecoderBase64;
 import home.fifteen.dictionary.utils.Settings;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.PropertyResourceBundle;
+import java.util.StringTokenizer;
 
 public class FileGetterEncrypted implements DictionaryGetter {
 
@@ -44,12 +45,23 @@ public class FileGetterEncrypted implements DictionaryGetter {
 
         setDictionaryName();
 
-        try {
-            InputStream is = new ByteArrayInputStream(decodedString.getBytes(StandardCharsets.UTF_8));
-            PropertyResourceBundle prb = new PropertyResourceBundle(is);
+        try (
+                InputStream is = new ByteArrayInputStream(decodedString.getBytes(StandardCharsets.UTF_8));
+                InputStreamReader isr = new InputStreamReader(is , StandardCharsets.UTF_8);
+                BufferedReader reader = new BufferedReader(isr )
+            ) {
+            String line;
+            while( (line = reader.readLine()) != null) {
+                StringTokenizer tokenizer = new StringTokenizer(line , "=");
+                if(tokenizer.hasMoreTokens()){
+                    String key   = tokenizer.nextToken();
+                    String value = tokenizer.nextToken();
+                    Word word = new Word(key , value);
 
-            for (String key : prb.keySet()) {
-                dictionary.addWord( parseKey(key) , prb.getString(key));
+                    dictionary.addWord(word);
+                }
+
+
             }
 
         } catch (IOException e) {

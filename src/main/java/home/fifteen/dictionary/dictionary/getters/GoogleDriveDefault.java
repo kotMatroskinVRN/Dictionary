@@ -25,6 +25,7 @@ import com.google.api.services.drive.model.File;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.Word;
 
 
 public class GoogleDriveDefault implements DictionaryGetter {
@@ -127,18 +128,26 @@ public class GoogleDriveDefault implements DictionaryGetter {
     private void download(){
         try {
 
-        String URL_NAME = "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=";
-        URL url = new URL(URL_NAME + FILE_ID);
+            String URL_NAME = "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=";
+            URL url = new URL(URL_NAME + FILE_ID);
 
-        InputStreamReader is = new InputStreamReader(url.openStream() , StandardCharsets.UTF_8) ;
-//        InputStreamReader is = new InputStreamReader(url.openStream() , StandardCharsets.ISO_8859_1) ;
-        PropertyResourceBundle prb = new PropertyResourceBundle(is);
+            InputStreamReader is = new InputStreamReader(url.openStream() , StandardCharsets.UTF_8) ;
+            BufferedReader reader = new BufferedReader(is );
 
-        for (String key : prb.keySet()) {
-            dictionary.addWord( parseKey(key) , prb.getString(key));
-        }
+            String line;
+            while( (line = reader.readLine()) != null) {
+                StringTokenizer tokenizer = new StringTokenizer(line , "=");
+                if(tokenizer.hasMoreTokens()){
+                    String key   = tokenizer.nextToken();
+                    String value = tokenizer.nextToken();
+                    Word word = new Word(key , value);
 
+                    dictionary.addWord(word);
+                }
+            }
 
+            is.close();
+            reader.close();
 
         } catch (IOException   e) {
             e.printStackTrace();

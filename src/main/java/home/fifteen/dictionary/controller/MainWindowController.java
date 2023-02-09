@@ -120,7 +120,7 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         task.prepareTask();
         log.info(task.toString());
 
-        question.setText(task.getTask());
+        question.setText(task.getTask().getWord());
         answer1.setText(task.getAnswers().get(0));
         answer2.setText(task.getAnswers().get(1));
         answer3.setText(task.getAnswers().get(2));

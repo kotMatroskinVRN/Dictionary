@@ -4,6 +4,7 @@ package home.fifteen.dictionary.dictionary.getters;
 
 
 import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.dictionary.Word;
 import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 
 import java.io.*;
@@ -51,18 +52,27 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             url = new URL(URL_NAME + FILE_ID);
 
         InputStreamReader is = new InputStreamReader(url.openStream() , StandardCharsets.UTF_8) ;
+        BufferedReader reader = new BufferedReader(is );
 
-        PropertyResourceBundle prb = new PropertyResourceBundle(is);
+        String line;
+        while( (line = reader.readLine()) != null) {
+            StringTokenizer tokenizer = new StringTokenizer(line , "=");
+            if(tokenizer.hasMoreTokens()){
+                String key   = tokenizer.nextToken();
+                String value = tokenizer.nextToken();
+                Word word = new Word(key , value);
 
-        for (String key : prb.keySet()) {
-            dictionary.addWord( parseKey(key) , prb.getString(key));
+                dictionary.addWord(word);
+            }
         }
 
-            System.out.println(new Date(2592000));
+        is.close();
+        reader.close();
+
 
 //        getFileInfo();
-            httpRequest();
-            httpClient();
+        httpRequest();
+        httpClient();
         setDictionaryName();
 
         } catch (IOException e) {

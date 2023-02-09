@@ -1,16 +1,16 @@
 package home.fifteen.dictionary.dictionary;
 
-import java.io.Serializable;
 
 public class Word {
 
-    private String word;
-    private String description;
+    private final String word;
+    private final String description;
     private int    weight;
 
     public Word(String word, String description) {
         this.word = word;
         this.description = description;
+        weight = 0;
     }
 
     public String getWord() {
@@ -19,6 +19,14 @@ public class Word {
 
     public String getDescription() {
         return description;
+    }
+
+    public void addWeight(){
+        weight++;
+    }
+
+    public int getWeight(){
+        return weight;
     }
 
     @Override
