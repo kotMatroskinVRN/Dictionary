@@ -2,7 +2,7 @@ package home.fifteen.dictionary.task;
 
 import home.fifteen.dictionary.dictionary.Dictionary;
 import home.fifteen.dictionary.Main;
-import home.fifteen.dictionary.dictionary.Word;
+import home.fifteen.dictionary.dictionary.word.Word;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -16,6 +16,8 @@ public class Task {
     private Word task ;
     private String  correctAnswer;
     private int correctAnswers , correctAnswersInARow;
+    private int repeatCounter;
+    private double averageWeight;
 
 
     public Task(){
@@ -24,6 +26,7 @@ public class Task {
 //        words.clear();
         correctAnswers = 0;
         correctAnswersInARow = 0;
+        repeatCounter = 0;
 
     }
 
@@ -39,12 +42,33 @@ public class Task {
             }
         }
 
+        countAverageWeight();
+
     }
 
     public void prepareTask(){
-        task = getRandomWord();
+
+        if(repeatCounter==5){
+            searchMinimumWeightWord();
+            repeatCounter = 0;
+        }else {
+            makeRegularTask();
+        }
+
+
+        Main.getLogger().warning(
+                String.format( "%-30s%-5d%-5f\n" ,  task.getWord() , task.getWeight() , averageWeight  )
+        );
+        task.addWeight();
+        countAverageWeight();
+        repeatCounter++;
+
+
         makeAnswers();
     }
+
+
+
     public Word getTask(){
         return task;
     }
@@ -62,8 +86,10 @@ public class Task {
             correctAnswersInARow++;
 
         }else{
-
+            task.markMistake();
+            countAverageWeight();
             correctAnswersInARow = 0;
+            repeatCounter =0;
         }
 
         return factor;
@@ -109,6 +135,30 @@ public class Task {
         int number = (int)(Math.random()*words.size());
         return words.get(number);
 
+    }
+
+    private void countAverageWeight() {
+        double sum = 0;
+        for(Word word : words){
+            sum+=word.getWeight();
+        }
+
+        averageWeight =  sum /  words.size();
+    }
+
+    private void searchMinimumWeightWord() {
+        int min = task.getWeight();
+        for(Word word : words){
+            if(word.getWeight()<min){
+                task = word;
+            }
+        }
+    }
+
+    private void makeRegularTask() {
+        do{
+            task = getRandomWord();
+        }while(task.getWeight()>averageWeight);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package home.fifteen.dictionary.utils;
 
+import home.fifteen.dictionary.Main;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -55,10 +57,14 @@ public class DecoderBase64 {
 
     private void getFileData() {
 
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader( new FileInputStream(SOURCE), StandardCharsets.UTF_8 )
-            );
+        Main.getLogger().info(SOURCE);
+
+        try (
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader( new FileInputStream(SOURCE), StandardCharsets.UTF_8 )
+                )
+                ) {
+
             String line = reader.readLine();
             while (line != null) {
                 parseLine(line);

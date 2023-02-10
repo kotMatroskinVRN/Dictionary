@@ -4,8 +4,8 @@ package home.fifteen.dictionary.dictionary.getters;
 
 
 import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.dictionary.Word;
-import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
+import home.fifteen.dictionary.dictionary.word.Word;
+import home.fifteen.dictionary.dictionary.word.WordMaker;
 
 import java.io.*;
 import java.net.*;
@@ -57,12 +57,12 @@ public class GoogleDriveNoApi implements DictionaryGetter {
         String line;
         while( (line = reader.readLine()) != null) {
             StringTokenizer tokenizer = new StringTokenizer(line , "=");
-            if(tokenizer.hasMoreTokens()){
-                String key   = tokenizer.nextToken();
-                String value = tokenizer.nextToken();
-                Word word = new Word(key , value);
-
+            WordMaker wordMaker = new WordMaker();
+            try {
+                Word word = wordMaker.make(line);
                 dictionary.addWord(word);
+            }catch ( NoSuchElementException e ){
+                continue;
             }
         }
 

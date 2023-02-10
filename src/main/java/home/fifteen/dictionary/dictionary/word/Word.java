@@ -1,4 +1,4 @@
-package home.fifteen.dictionary.dictionary;
+package home.fifteen.dictionary.dictionary.word;
 
 
 public class Word {
@@ -34,5 +34,9 @@ public class Word {
         String format = "%-40s%s\n";
 
         return String.format(format , word , description);
+    }
+
+    public void markMistake() {
+        weight = -1;
     }
 }

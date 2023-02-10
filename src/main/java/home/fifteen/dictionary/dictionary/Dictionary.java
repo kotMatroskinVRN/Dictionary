@@ -1,5 +1,7 @@
 package home.fifteen.dictionary.dictionary;
 
+import home.fifteen.dictionary.dictionary.word.Word;
+
 import java.util.*;
 
 public class Dictionary {

@@ -1,2 +1,1 @@
-encoded_2018.properties
-encoded_clothes.properties
+encoded_default.dct

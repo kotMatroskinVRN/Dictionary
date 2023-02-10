@@ -2,12 +2,14 @@ package home.fifteen.dictionary.dictionary.getters;
 
 
 import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.dictionary.Word;
+import home.fifteen.dictionary.dictionary.word.Word;
+import home.fifteen.dictionary.dictionary.word.WordMaker;
 import home.fifteen.dictionary.utils.CheckSum;
 import home.fifteen.dictionary.utils.Settings;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 public class FileGetter implements DictionaryGetter {
@@ -48,15 +50,13 @@ public class FileGetter implements DictionaryGetter {
 
             String line;
             while( (line = reader.readLine()) != null) {
-                StringTokenizer tokenizer = new StringTokenizer(line , "=");
-                if(tokenizer.hasMoreTokens()){
-                    String key   = tokenizer.nextToken();
-                    String value = tokenizer.nextToken();
-                    Word word = new Word(key , value);
-
+                WordMaker wordMaker = new WordMaker();
+                try {
+                    Word word = wordMaker.make(line);
                     dictionary.addWord(word);
+                }catch ( NoSuchElementException e ){
+                    continue;
                 }
-
 
             }
 

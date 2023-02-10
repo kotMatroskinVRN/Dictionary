@@ -1,10 +1,7 @@
 package home.fifteen.dictionary.dictionary.getters;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.*;
@@ -13,7 +10,6 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
@@ -25,7 +21,8 @@ import com.google.api.services.drive.model.File;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.dictionary.Word;
+import home.fifteen.dictionary.dictionary.word.Word;
+import home.fifteen.dictionary.dictionary.word.WordMaker;
 
 
 public class GoogleDriveDefault implements DictionaryGetter {
@@ -136,14 +133,15 @@ public class GoogleDriveDefault implements DictionaryGetter {
 
             String line;
             while( (line = reader.readLine()) != null) {
-                StringTokenizer tokenizer = new StringTokenizer(line , "=");
-                if(tokenizer.hasMoreTokens()){
-                    String key   = tokenizer.nextToken();
-                    String value = tokenizer.nextToken();
-                    Word word = new Word(key , value);
 
+                WordMaker wordMaker = new WordMaker();
+                try {
+                    Word word = wordMaker.make(line);
                     dictionary.addWord(word);
+                }catch ( NoSuchElementException e ){
+                    continue;
                 }
+
             }
 
             is.close();

@@ -17,12 +17,12 @@ public enum Sources {
 //            return new GoogleDriveNoApi(name);
 //        }
 //    },
-    GOOGLE_DRIVE("GoogleDrive.txt", false){
-        @Override
-        DictionaryGetter getGetter(String name) {
-            return new GoogleDriveDefault(name);
-        }
-    },
+//    GOOGLE_DRIVE("GoogleDrive.txt", false){
+//        @Override
+//        DictionaryGetter getGetter(String name) {
+//            return new GoogleDriveDefault(name);
+//        }
+//    },
     ENCRYPTED("EncryptedFiles.txt" , true){
         @Override
         DictionaryGetter getGetter(String name) {
