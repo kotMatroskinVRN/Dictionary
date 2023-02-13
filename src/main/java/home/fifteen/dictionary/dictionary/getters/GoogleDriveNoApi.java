@@ -139,9 +139,9 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             Pattern pattern = Pattern.compile("filename=\"(.*)\"");
             Matcher matcher = pattern.matcher(requestResult);
             if(matcher.find()) {
-                log.info("Google Drive File Name has been found ");
+                log.printVerbose("Google Drive File Name has been found ");
                 fileName = matcher.group(1);
-                log.info(fileName);
+                log.printVerbose(fileName);
 
             }
 
@@ -168,7 +168,7 @@ public class GoogleDriveNoApi implements DictionaryGetter {
 //                    .build()
 
             lastModified = connection.getLastModified();
-            log.info("Modified : " + lastModified);
+            log.printVerbose("Modified" , lastModified.toString());
 
 
 
@@ -189,7 +189,7 @@ public class GoogleDriveNoApi implements DictionaryGetter {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
 
-            log.info(String.valueOf(url));
+            log.printVerbose(String.valueOf(url));
 
             Map<String,String> params = new HashMap<>();
 //            params.put("export","download");
@@ -284,7 +284,7 @@ public class GoogleDriveNoApi implements DictionaryGetter {
 
             HttpResponse<String> response = client
                     .send(request , HttpResponse.BodyHandlers.ofString());
-            log.info(String.valueOf(response.statusCode()));
+            log.printVerbose(String.valueOf(response.statusCode()));
 //            log.info(response.body());
 
 
@@ -297,9 +297,9 @@ public class GoogleDriveNoApi implements DictionaryGetter {
                     System.out.println(key + ": " + value);
             }
 
-            log.info(response.body());
+            log.printVerbose(response.body());
 
-            log.info(String.valueOf(responseHeaders.firstValue("content-length")));
+            log.printVerbose(String.valueOf(responseHeaders.firstValue("content-length")));
 
 
 

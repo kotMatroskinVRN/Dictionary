@@ -10,7 +10,6 @@ import home.fifteen.dictionary.utils.Settings;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
 
 public class FileGetter implements DictionaryGetter {
 

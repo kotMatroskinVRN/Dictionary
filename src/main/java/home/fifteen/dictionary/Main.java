@@ -1,11 +1,10 @@
 package home.fifteen.dictionary;
 
 import home.fifteen.dictionary.controller.SceneSwitcher;
-import home.fifteen.dictionary.dictionary.*;
-import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
+import home.fifteen.dictionary.dictionary.Sources;
 import home.fifteen.dictionary.task.TaskBuilder;
 import home.fifteen.dictionary.utils.EncoderBase64;
-import home.fifteen.dictionary.utils.Settings;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,30 +14,19 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.*;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import java.util.Objects;
 
 public class Main extends Application  {
 
-    private final static Logger LOGGER = Logger.getLogger(ClassLoader.class.getName());
-
+    private final static ColorfulLogger LOGGER = ColorfulLogger.getLogger();
     private final static String FXML = "MainWindow.fxml";
     private final static String CHOOSER = "ChooseDictionary.fxml";
 
 
     public static void main(String[] args) {
 
-        try {
-            LogManager.getLogManager().readConfiguration(
-                    ClassLoader.getSystemResourceAsStream("logging.properties"));
 
-        } catch (IOException e) {
-            System.err.println("Could not setup logger configuration: " + e);
-        }
 
 
         if(args.length>1 && args[0].equals("-encode")){
@@ -150,14 +138,11 @@ public class Main extends Application  {
                     "\nWrong File Name : %s\nPlease specify file name from working directory." ,
                     fileName
             );
-            LOGGER.severe( string );
+            LOGGER.printError( string );
         }
 
         System.exit(0);
     }
 
-    public static Logger getLogger(){
-        return LOGGER;
-    }
 
 }

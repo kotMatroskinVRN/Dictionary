@@ -2,6 +2,7 @@ package home.fifteen.dictionary.utils;
 
 import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.Sources;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 
 public class EncoderBase64 {
 
-    private final Logger LOGGER = Main.getLogger();
+    private final ColorfulLogger LOGGER = ColorfulLogger.getLogger();
     private final String PREFIX = "encoded_";
 
     private final String fileName;
@@ -57,12 +58,12 @@ public class EncoderBase64 {
     public void encode(){
 
         String string = fileToString(fileName);
-        LOGGER.finest(string);
+        LOGGER.printVerbose(string);
         Base64.Encoder encoder = Base64.getEncoder();
         codedText = encoder.encodeToString(string.getBytes(StandardCharsets.UTF_8));
 //        Base64.Decoder decoder = Base64.getDecoder();
         stringToFile(outFileName , getContent());
-        LOGGER.finest(codedText);
+        LOGGER.printVerbose(codedText);
         updateSourceDictionaryFile();
     }
 
@@ -75,7 +76,7 @@ public class EncoderBase64 {
             Files.write( file.toPath() , (PREFIX+fileName).getBytes(), StandardOpenOption.APPEND);
         }
         catch (IOException e) {
-            LOGGER.severe(e.getMessage());
+            LOGGER.printError(e.getMessage());
         }
 
         String content = fileToString(Sources.ENCRYPTED.getFileName());
@@ -84,7 +85,7 @@ public class EncoderBase64 {
         Set<String> lines = new HashSet<>(List.of(content.split("\n")));
 
         String result = String.join("\n" , lines);
-        LOGGER.finest(result);
+        LOGGER.printVerbose(result);
 
         stringToFile(Sources.ENCRYPTED.getFileName() , result );
 

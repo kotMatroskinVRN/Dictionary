@@ -1,15 +1,14 @@
 package home.fifteen.dictionary.dictionary.getters;
 
 
-import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.Dictionary;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 public interface DictionaryGetter extends Serializable {
 
-    Logger log = Main.getLogger();
+    ColorfulLogger log = ColorfulLogger.getLogger();
 
 
     void init();

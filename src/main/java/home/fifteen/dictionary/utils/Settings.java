@@ -1,11 +1,10 @@
 package home.fifteen.dictionary.utils;
 
-import home.fifteen.dictionary.Main;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.PropertyResourceBundle;
-import java.util.logging.Logger;
 
 public enum Settings {
 
@@ -13,7 +12,7 @@ public enum Settings {
     FILE_NAME_SERIALIZABLE(){},
     ;
 
-    private final Logger log = Main.getLogger();
+    private final ColorfulLogger log = ColorfulLogger.getLogger();
 
     private String property ;
 
@@ -27,7 +26,7 @@ public enum Settings {
 
             property = prb.getString( name() );
 
-            log.info( this.toString() );
+            log.printVerbose( this.toString() );
 
         } catch (IOException e) {
             System.out.println("Check for common.properties " + name() );

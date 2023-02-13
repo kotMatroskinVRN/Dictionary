@@ -86,7 +86,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
     @Override
     public void setTaskBuilder(TaskBuilder taskBuilder) {
         this.taskBuilder = taskBuilder;
-        log.info(taskBuilder.toString());
+        log.printVerbose(taskBuilder.toString());
     }
 
     @Override
@@ -99,28 +99,28 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
     private void readOfflineSources(){
 
-        log.info("Sources : " + Sources.getGetters().toString());
+        log.printVerbose("Sources" , Sources.getGetters().toString());
         for(DictionaryGetter getter : Sources.getGetters()){
             CheckBox checkBox = new CheckBox();
             checkBox.setSelected(true);
             checkBox.setText(getter.getDictionary().getNameForList());
-            log.info( "Reading Dictionary name from DATA " + getter.getDictionary().getNameForList());
-            log.info( "Reading Dictionary name from GUI " + checkBox.getText());
+            log.printVerbose( "Reading Dictionary name from DATA " + getter.getDictionary().getNameForList());
+            log.printVerbose( "Reading Dictionary name from GUI " + checkBox.getText());
             sources.put(checkBox , getter);
 
             checkBox.setOnAction((ae)->getSelectedSource());
-            log.fine(getter.getDictionary().toString());
+            log.printVerbose(getter.getDictionary().toString());
         }
         sourceListView.getChildren().addAll(sources.keySet());
 
-        log.info( String.valueOf(sourceListView.getChildren().size()));
+        log.printVerbose( String.valueOf(sourceListView.getChildren().size()));
     }
 
     private void readOnlineSources(){
 
         Sources.initOnline();
 
-        log.info("Sources : " + Sources.getOnlineGetters().toString());
+        log.printVerbose("Sources" , Sources.getOnlineGetters().toString());
         for(DictionaryGetter getter : Sources.getOnlineGetters()){
             CheckBox checkBox = new CheckBox();
             checkBox.setSelected(true);
@@ -130,14 +130,14 @@ public class ChooserController implements Initializable , SceneSwitcher{
             highLightOnlineDictionaries();
 
             checkBox.setOnAction((ae)->getSelectedSource());
-            log.fine(getter.getDictionary().toString());
+            log.printVerbose(getter.getDictionary().toString());
         }
         onlineSourceListView.getChildren().clear();
         onlineSourceListView.getChildren().addAll(sourcesOnline.keySet());
 
 
 
-        log.info( String.valueOf(sourceListView.getChildren().size()));
+        log.printVerbose( String.valueOf(sourceListView.getChildren().size()));
     }
 
     private void highLightOnlineDictionaries() {
@@ -182,22 +182,22 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
             if(checkBox.isSelected()){
                 getters.add(sources.get(checkBox));
-                log.info(checkBox.getText());
+                log.printVerbose(checkBox.getText());
             }
         }
-        log.info("Offline getters number : " + getters.size());
+        log.printVerbose("Offline getters number : " + getters.size());
 
         for(CheckBox checkBox : sourcesOnline.keySet()){
 
             if(checkBox.isSelected()){
                 DictionaryGetter getter = sourcesOnline.get(checkBox);
                 getters.add(getter);
-                log.info(checkBox.getText());
+                log.printVerbose(checkBox.getText());
             }
         }
-        log.info("Online getters number : " + getters.size());
+        log.printVerbose("Online getters number : " + getters.size());
 
-        log.fine(taskBuilder.toString());
+        log.printVerbose(taskBuilder.toString());
 
 
         if(getters.size()==0){
@@ -210,7 +210,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
         taskBuilder.setGetters(getters);
 
-        log.fine(taskBuilder.toString());
+        log.printVerbose(taskBuilder.toString());
     }
 
 

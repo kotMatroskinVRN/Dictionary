@@ -1,6 +1,7 @@
 package home.fifteen.dictionary.utils;
 
 import home.fifteen.dictionary.Main;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -57,7 +58,7 @@ public class DecoderBase64 {
 
     private void getFileData() {
 
-        Main.getLogger().info(SOURCE);
+        ColorfulLogger.getLogger().printVerbose(SOURCE);
 
         try (
                 BufferedReader reader = new BufferedReader(

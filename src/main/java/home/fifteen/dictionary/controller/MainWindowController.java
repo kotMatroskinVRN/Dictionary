@@ -108,7 +108,7 @@ public class MainWindowController implements Initializable , SceneSwitcher {
     public void setTaskBuilder(TaskBuilder taskBuilder) {
         this.taskBuilder = taskBuilder;
         tooltip.setText(taskBuilder.getGettersToolTip());
-        log.info(taskBuilder.toString());
+        log.printVerbose(taskBuilder.toString());
 
         makeTask();
     }
@@ -118,7 +118,7 @@ public class MainWindowController implements Initializable , SceneSwitcher {
 
         task = this.taskBuilder.getTask();
         task.prepareTask();
-        log.info(task.toString());
+        log.printVerbose(task.toString());
 
         question.setText(task.getTask().getWord());
         answer1.setText(task.getAnswers().get(0));

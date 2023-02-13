@@ -1,15 +1,14 @@
 package home.fifteen.dictionary.task;
 
 import home.fifteen.dictionary.dictionary.Dictionary;
-import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.word.Word;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 public class Task {
 
-    private final Logger log = Main.getLogger();
+    private final ColorfulLogger log = ColorfulLogger.getLogger();
 
     private final List<Word> words ;
     private final ArrayList<String> answers ;
@@ -34,8 +33,10 @@ public class Task {
     public void addDictionary(Dictionary dictionary){
         for(Word word : dictionary.getWords()){
             if(words.contains(word)){
-                log.warning(
-                        String.format("word %s exists with meaning %s. Will be skipped" , word.getWord() , word.getDescription() )
+                log.printWarning(
+                        "word %s exists with meaning %s. Will be skipped" ,
+                        word.getWord() ,
+                        word.getDescription()
                 );
             }else {
                 words.add(word);
@@ -56,8 +57,8 @@ public class Task {
         }
 
 
-        Main.getLogger().warning(
-                String.format( "%-30s%-5d%-5f\n" ,  task.getWord() , task.getWeight() , averageWeight  )
+        log.printInfo(
+                String.format( "%-30s%-5d%-5f %2d\n" ,  task.getWord() , task.getWeight() , averageWeight , repeatCounter  )
         );
         task.addWeight();
         countAverageWeight();
@@ -89,7 +90,7 @@ public class Task {
             task.markMistake();
             countAverageWeight();
             correctAnswersInARow = 0;
-            repeatCounter =0;
+            repeatCounter = 0;
         }
 
         return factor;
@@ -151,6 +152,7 @@ public class Task {
         for(Word word : words){
             if(word.getWeight()<min){
                 task = word;
+                min = task.getWeight();
             }
         }
     }

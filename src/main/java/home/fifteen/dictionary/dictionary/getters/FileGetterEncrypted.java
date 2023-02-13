@@ -9,7 +9,6 @@ import home.fifteen.dictionary.utils.Settings;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
 
 public class FileGetterEncrypted implements DictionaryGetter {
 
@@ -83,8 +82,8 @@ public class FileGetterEncrypted implements DictionaryGetter {
     @Override
     public void setDictionaryName() {
         dictionary.setName(decoderBase64.getName());
-        log.info("Setting name for Dictionary " + dictionary.getName());
-        log.info("Setting dictionary name fo GUI usage " + dictionary.getNameForList());
+        log.printVerbose("Setting name for Dictionary " + dictionary.getName());
+        log.printVerbose("Setting dictionary name fo GUI usage " + dictionary.getNameForList());
     }
 
     @Override

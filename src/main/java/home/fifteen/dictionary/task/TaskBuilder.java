@@ -1,17 +1,18 @@
 package home.fifteen.dictionary.task;
 
-import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 import home.fifteen.dictionary.utils.Settings;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class TaskBuilder {
 
-    private final Logger LOGGER = Main.getLogger();
+    private final ColorfulLogger LOGGER = ColorfulLogger.getLogger();
 
     private final Set<DictionaryGetter> getters ;
     private Task task;
@@ -33,7 +34,7 @@ public class TaskBuilder {
 
 
             for(DictionaryGetter getter : getters){
-                LOGGER.info(getter.getDictionary().getNameForList());
+                LOGGER.printVerbose(getter.getDictionary().getNameForList());
                 task.addDictionary(getter.getDictionary());
             }
             oos.writeObject(getters);

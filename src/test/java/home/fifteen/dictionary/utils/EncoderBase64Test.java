@@ -1,13 +1,14 @@
 package home.fifteen.dictionary.utils;
 
 import home.fifteen.dictionary.Main;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 import org.junit.jupiter.api.Test;
 
 import java.util.logging.Logger;
 
 class EncoderBase64Test {
 
-    private Logger log = Main.getLogger();
+    private ColorfulLogger log = ColorfulLogger.getLogger();
 
 
     @Test

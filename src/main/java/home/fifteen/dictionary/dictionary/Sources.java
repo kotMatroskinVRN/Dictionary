@@ -1,13 +1,14 @@
 package home.fifteen.dictionary.dictionary;
 
-import home.fifteen.dictionary.Main;
-import home.fifteen.dictionary.dictionary.getters.*;
+import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
+import home.fifteen.dictionary.dictionary.getters.FileGetter;
+import home.fifteen.dictionary.dictionary.getters.FileGetterEncrypted;
 import home.fifteen.dictionary.utils.Settings;
+import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public enum Sources {
 
@@ -37,7 +38,7 @@ public enum Sources {
     },
     ;
 
-    private final Logger log = Main.getLogger();
+    private final ColorfulLogger log = ColorfulLogger.getLogger();
     private static final Set<DictionaryGetter> getters = new HashSet<>();
     private static final Set<DictionaryGetter> onlineGetters = new HashSet<>();
     private final String fileName;
@@ -95,7 +96,7 @@ public enum Sources {
             DictionaryGetter getter = getGetter(line);
             getter.init();
 
-            File file = new File(line);
+//            File file = new File(line);
 //            if(file.isFile()) {
 //                getter.getDictionary().setName(file.getName());
 //            }
@@ -121,8 +122,12 @@ public enum Sources {
     private String fileToString() {
         StringBuilder result = new StringBuilder();
 
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+        try(
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(new FileInputStream(fileName), "UTF-8")
+                );
+                ) {
+
             String line = reader.readLine();
             while (line != null) {
                 result.append(line);
@@ -131,7 +136,7 @@ public enum Sources {
             }
             return result.toString();
         } catch (IOException e) {
-            log.severe("File does not exist : " + fileName);
+            log.printError("File does not exist : " + fileName);
             e.printStackTrace();
         }
         return "missed";
