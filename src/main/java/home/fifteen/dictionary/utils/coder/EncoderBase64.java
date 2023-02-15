@@ -1,7 +1,8 @@
-package home.fifteen.dictionary.utils;
+package home.fifteen.dictionary.utils.coder;
 
-import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.dictionary.Sources;
+import home.fifteen.dictionary.utils.file.CheckSum;
+import home.fifteen.dictionary.utils.Settings;
 import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.io.*;
@@ -12,7 +13,6 @@ import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class EncoderBase64 {
 

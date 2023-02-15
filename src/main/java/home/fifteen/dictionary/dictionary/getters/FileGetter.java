@@ -4,7 +4,7 @@ package home.fifteen.dictionary.dictionary.getters;
 import home.fifteen.dictionary.dictionary.Dictionary;
 import home.fifteen.dictionary.dictionary.word.Word;
 import home.fifteen.dictionary.dictionary.word.WordMaker;
-import home.fifteen.dictionary.utils.CheckSum;
+import home.fifteen.dictionary.utils.file.CheckSum;
 import home.fifteen.dictionary.utils.Settings;
 
 import java.io.*;

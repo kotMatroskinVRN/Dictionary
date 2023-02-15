@@ -11,7 +11,7 @@ HBox {
 VBox {
     -fx-alignment: center;
     -fx-font-weight:bold;
-    -fx-spacing: 15;
+    -fx-spacing: 10;
     -fx-border-width:0;
 }
 
@@ -40,12 +40,16 @@ SplitPane{
 }
 
 #question{
+    -fx-pref-height: 70px;
     -fx-alignment: center;
     -fx-font-weight:bold;
     -fx-spacing: 20;
-    -fx-font-size: 24;
+    -fx-font-size: 26;
     -fx-wrap-text: true;
-    -fx-padding: 10 ;
+    -fx-word-wrap: break-word;
+    -fx-padding: 5 ;
+    -fx-max-width: Infinity;
+
 }
 
 #correctAnswer {

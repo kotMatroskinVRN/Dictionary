@@ -1,0 +1,51 @@
+Run programm
+
+./run.bat
+
+####################################################
+Create new Dictionary
+
+create .dct file with
+
+word = description
+two words = description
+
+Several words in KEY part separate by " " .
+
+Put this properties file in run directory
+Create encrypted dictionary
+> ./run.bat -encode your_file.dct
+Please do not use ./ or .\ in file name
+
+Result file - encoded_your_file.dct copy to DictionarySource directory
+will be copied to DictionarySource and entry of dictionary will be added to EncryptedFiles.txt file
+
+
+####################################################
+
+Add Dictionary from Google Drive
+
+create .dct file with
+
+word = description
+two words = description
+
+Several words in KEY part separate by " " .
+
+put .dct file on Google Drive
+make this file available for all who have link
+
+copy link
+https://drive.google.com/file/d/1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz/view?usp=sharing
+
+file ID is - 1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz
+
+add file ID in DictionarySource/GoogleDrive.txt
+1hhLpOfCXx2gNE6sbYMubRo80wtusZrvz
+
+
+####################################################
+
+Program remembers last run dictionaries set in file last_run.out
+In case of problems just delete this file and rerun program
+

@@ -3,7 +3,7 @@ package home.fifteen.dictionary;
 import home.fifteen.dictionary.controller.SceneSwitcher;
 import home.fifteen.dictionary.dictionary.Sources;
 import home.fifteen.dictionary.task.TaskBuilder;
-import home.fifteen.dictionary.utils.EncoderBase64;
+import home.fifteen.dictionary.utils.commandline.CommandLineOptions;
 import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -28,10 +27,8 @@ public class Main extends Application  {
 
 
 
-
-        if(args.length>1 && args[0].equals("-encode")){
-            encodeDictionary(args[1]);
-        }
+        CommandLineOptions commandLineOptions = new CommandLineOptions();
+        commandLineOptions.init(args);
 
 //        Task task = new Task();
 //
@@ -122,27 +119,6 @@ public class Main extends Application  {
 
 
 
-    private static void encodeDictionary(String fileName) {
-
-        File file = new File(fileName);
-
-        boolean factor = file.isFile() && file.getName().equals(fileName);
-
-        if(factor) {
-            EncoderBase64 encoder = new EncoderBase64(fileName);
-            encoder.initFileInfo();
-            encoder.encode();
-
-        }else{
-            String string = String.format(
-                    "\nWrong File Name : %s\nPlease specify file name from working directory." ,
-                    fileName
-            );
-            LOGGER.printError( string );
-        }
-
-        System.exit(0);
-    }
 
 
 }

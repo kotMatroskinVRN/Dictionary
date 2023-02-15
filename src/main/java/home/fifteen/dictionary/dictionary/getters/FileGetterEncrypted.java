@@ -3,7 +3,7 @@ package home.fifteen.dictionary.dictionary.getters;
 import home.fifteen.dictionary.dictionary.Dictionary;
 import home.fifteen.dictionary.dictionary.word.Word;
 import home.fifteen.dictionary.dictionary.word.WordMaker;
-import home.fifteen.dictionary.utils.DecoderBase64;
+import home.fifteen.dictionary.utils.coder.DecoderBase64;
 import home.fifteen.dictionary.utils.Settings;
 
 import java.io.*;

@@ -1,8 +1,7 @@
 package home.fifteen.dictionary.utils;
 
+import home.fifteen.dictionary.utils.file.CheckSum;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CheckSumTest {
 

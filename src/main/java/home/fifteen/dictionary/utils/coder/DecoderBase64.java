@@ -1,4 +1,4 @@
-package home.fifteen.dictionary.utils;
+package home.fifteen.dictionary.utils.coder;
 
 import home.fifteen.dictionary.Main;
 import home.fifteen.dictionary.utils.logger.ColorfulLogger;

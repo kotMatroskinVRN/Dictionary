@@ -1,5 +1,6 @@
 package home.fifteen.dictionary.utils;
 
+import home.fifteen.dictionary.utils.coder.DecoderBase64;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -83,12 +83,12 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         rightAnswers.setText( String.valueOf(task.getCorrectAnswers()));
         rightInaRow.setText(String.valueOf(task.getCorrectAnswersInARow()));
 
-        String text = task.getTask() + " = " + task.getCorrectAnswer();
+        String text = task.getTask().getWord() + " = " + task.getCorrectAnswer();
 
         makeTask();
 
         if(!isCorrect){
-
+            log.printVerbose(text);
             showCorrectAnswer(text);
         }
 
@@ -120,6 +120,7 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         task.prepareTask();
         log.printVerbose(task.toString());
 
+
         question.setText(task.getTask().getWord());
         answer1.setText(task.getAnswers().get(0));
         answer2.setText(task.getAnswers().get(1));
@@ -130,6 +131,11 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         borderPane.setBottom(bottomOriginal);
         rightAnswers.setText( String.valueOf(task.getCorrectAnswers()));
         rightInaRow.setText(String.valueOf(task.getCorrectAnswersInARow()));
+        computeQuestionTextSize();
+    }
+
+    private void computeQuestionTextSize() {
+        log.printVerbose("Font Size" ,  String.valueOf(question.getFont().getSize()));
     }
 
     private void showCorrectAnswer(String text){

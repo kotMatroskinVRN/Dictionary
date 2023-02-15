@@ -1,4 +1,4 @@
-package home.fifteen.dictionary.utils;
+package home.fifteen.dictionary.utils.file;
 
 import java.io.*;
 
