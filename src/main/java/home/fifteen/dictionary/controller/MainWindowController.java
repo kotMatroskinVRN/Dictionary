@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -131,11 +132,22 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         borderPane.setBottom(bottomOriginal);
         rightAnswers.setText( String.valueOf(task.getCorrectAnswers()));
         rightInaRow.setText(String.valueOf(task.getCorrectAnswersInARow()));
+
         computeQuestionTextSize();
+
     }
 
     private void computeQuestionTextSize() {
-        log.printVerbose("Font Size" ,  String.valueOf(question.getFont().getSize()));
+        Font font = question.getFont();
+        log.printInfo("Font Size" ,  String.valueOf(font.getSize()));
+        String family = font.getFamily();
+        if(task.getTask().getWord().length()>30){
+            font = new Font(family ,16.0);
+        } else{
+            font = new Font(family ,26.0);
+        }
+        question.setFont(font);
+
     }
 
     private void showCorrectAnswer(String text){

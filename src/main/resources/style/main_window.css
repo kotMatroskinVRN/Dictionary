@@ -44,7 +44,7 @@ SplitPane{
 #question{
     -fx-text-alignment: center;
     -fx-font-weight:bold;
-    -fx-font-size: 22;
+    /*-fx-font-size: 200%;*/
     -fx-wrap-text: true;
     -fx-word-wrap: break-word;
     -fx-padding: 0 ;
