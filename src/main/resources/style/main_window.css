@@ -41,14 +41,14 @@ SplitPane{
   -fx-padding: 0 ;
 }
 
-#question{
+.question{
     -fx-text-alignment: center;
     -fx-font-weight:bold;
     /*-fx-font-size: 200%;*/
     -fx-wrap-text: true;
     -fx-word-wrap: break-word;
     -fx-padding: 0 ;
-
+    -fx-text-fill : green;
 }
 
 #correctAnswer {

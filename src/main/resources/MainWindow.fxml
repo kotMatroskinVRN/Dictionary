@@ -34,7 +34,7 @@
    <center>
       <SplitPane dividerPositions="0.15" orientation="VERTICAL">
          <HBox>
-            <Label id="question" fx:id="question" />
+            <Label  fx:id="question" styleClass="question" />
          </HBox>
          <VBox>
             <Button fx:id="answer1"  onAction="#checkAnswer"/>

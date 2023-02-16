@@ -2,6 +2,7 @@ package home.fifteen.dictionary.controller;
 
 import home.fifteen.dictionary.task.Task;
 import home.fifteen.dictionary.task.TaskBuilder;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,13 +49,13 @@ public class MainWindowController implements Initializable , SceneSwitcher {
     private TaskBuilder taskBuilder ;
     private Initializable chooserController;
     private Scene dictionaryChooser;
-    private HBox bottomOriginal;
+//    private HBox bottomOriginal;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        bottomOriginal = bottomPane;
+//        bottomOriginal = bottomPane;
 
         if(taskBuilder!=null){
             makeTask();
@@ -129,7 +130,8 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         answer4.setText(task.getAnswers().get(3));
         answer5.setText(task.getAnswers().get(4));
 
-        borderPane.setBottom(bottomOriginal);
+//        borderPane.setBottom(bottomOriginal);
+        borderPane.setBottom(bottomPane);
         rightAnswers.setText( String.valueOf(task.getCorrectAnswers()));
         rightInaRow.setText(String.valueOf(task.getCorrectAnswersInARow()));
 
@@ -141,13 +143,13 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         Font font = question.getFont();
         log.printInfo("Font Size" ,  String.valueOf(font.getSize()));
         String family = font.getFamily();
-        if(task.getTask().getWord().length()>30){
-            font = new Font(family ,16.0);
+        if(task.getTask().getWord().length()>25){
+            font = Font.font(16);
         } else{
-            font = new Font(family ,26.0);
+            font = Font.font(26);
         }
         question.setFont(font);
-
+        log.printInfo("Font Size" ,  String.valueOf(font.getSize()));
     }
 
     private void showCorrectAnswer(String text){
