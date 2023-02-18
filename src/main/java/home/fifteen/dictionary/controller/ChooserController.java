@@ -4,6 +4,7 @@ package home.fifteen.dictionary.controller;
 import home.fifteen.dictionary.dictionary.DictionaryGetterComparator;
 import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 import home.fifteen.dictionary.dictionary.Sources;
+import home.fifteen.dictionary.gui.MainWindow;
 import home.fifteen.dictionary.task.TaskBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,8 +34,6 @@ public class ChooserController implements Initializable , SceneSwitcher{
     @FXML
     Tooltip tooltip;
 
-    private Initializable mainWindowController;
-    private Scene main;
     private final Map<CheckBox , DictionaryGetter> sources = new TreeMap<>(Comparator.comparing(Labeled::getText)) ;
     private final Map<CheckBox , DictionaryGetter> sourcesOnline = new TreeMap<>(Comparator.comparing(Labeled::getText)) ;
     private TaskBuilder taskBuilder ;
@@ -64,9 +63,10 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
         Node    node = (Node) event.getSource();
         Stage window = (Stage)( node.getScene().getWindow() );
-        window.setScene(main);
+        window.setScene(MainWindow.getInstance().getScene());
         onlineSourceListView.getChildren().clear();
-        mainWindowController.initialize(null,null);
+        Initializable initializable = (Initializable) MainWindow.getInstance().getController();
+        initializable.initialize(null,null);
     }
 
     @FXML
@@ -78,10 +78,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
     }
     
 
-    @Override
-    public void setSecondaryController(Initializable mainWindowController){
-        this.mainWindowController = mainWindowController;
-    }
+
 
     @Override
     public void setTaskBuilder(TaskBuilder taskBuilder) {
@@ -89,10 +86,7 @@ public class ChooserController implements Initializable , SceneSwitcher{
         log.printVerbose(taskBuilder.toString());
     }
 
-    @Override
-    public void setSecondaryScene(Scene scene){
-        main = scene;
-    }
+
 
 
 

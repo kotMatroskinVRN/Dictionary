@@ -97,12 +97,6 @@ public class Task {
 
     }
 
-//    public void clear(){
-//        if(!words.isEmpty()){
-//            words.clear();
-//        }
-//    }
-
     public int getCorrectAnswers() {
         return correctAnswers;
     }

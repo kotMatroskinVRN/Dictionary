@@ -12,7 +12,7 @@ public interface SceneSwitcher {
 
     ColorfulLogger log = ColorfulLogger.getLogger();
 
-    void setSecondaryScene(Scene scene);
-    void setSecondaryController(Initializable controller);
+//    void setSecondaryScene(Scene scene);
+//    void setSecondaryController(Initializable controller);
     void setTaskBuilder(TaskBuilder taskBuilder);
 }

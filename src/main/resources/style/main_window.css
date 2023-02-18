@@ -6,19 +6,19 @@ HBox {
     -fx-font-size: 20;
     -fx-wrap-text: true;
     -fx-border-width:1;
-        -fx-border-color:green;
 }
 
 VBox {
     -fx-alignment: center;
+    -fx-max-width: 300;
     -fx-font-weight:bold;
     -fx-spacing: 10;
     -fx-border-width:1;
-        -fx-border-color: blue;
 }
 
 VBox .button{
     -fx-pref-width:  250px;
+    -fx-max-width: 250;
     -fx-pref-height: 70px;
     -fx-font-size: 16;
     -fx-wrap-text: true;
@@ -43,12 +43,11 @@ SplitPane{
 
 .question{
     -fx-text-alignment: center;
+    -fx-max-width: 300;
     -fx-font-weight:bold;
-    /*-fx-font-size: 200%;*/
     -fx-wrap-text: true;
     -fx-word-wrap: break-word;
     -fx-padding: 0 ;
-    -fx-text-fill : green;
 }
 
 #correctAnswer {
