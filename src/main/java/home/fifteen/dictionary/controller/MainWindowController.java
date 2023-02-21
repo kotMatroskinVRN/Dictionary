@@ -3,8 +3,10 @@ package home.fifteen.dictionary.controller;
 import home.fifteen.dictionary.gui.CorrectAnswerView;
 import home.fifteen.dictionary.gui.DictionaryChooser;
 import home.fifteen.dictionary.gui.FontForQuestion;
-import home.fifteen.dictionary.task.Task;
+import home.fifteen.dictionary.task.DictionaryTask;
 import home.fifteen.dictionary.task.TaskBuilder;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +21,8 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainWindowController implements Initializable , SceneSwitcher {
 
@@ -46,7 +50,7 @@ public class MainWindowController implements Initializable , SceneSwitcher {
     @FXML
     Tooltip tooltip;
 
-    private Task task;
+    private DictionaryTask task;
     private TaskBuilder taskBuilder ;
 
 
@@ -103,6 +107,12 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         log.printVerbose(taskBuilder.toString());
 
         makeTask();
+//        makeBackgroundTask();
+    }
+
+    @Override
+    public TaskBuilder getTaskBuilder() {
+        return taskBuilder;
     }
 
 
@@ -112,7 +122,10 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         task.prepareTask();
         log.printVerbose(task.toString());
 
+        updateGUI();
+    }
 
+    private void updateGUI(){
         question.setText(task.getTask().getWord());
         answer1.setText(task.getAnswers().get(0));
         answer2.setText(task.getAnswers().get(1));
@@ -125,6 +138,28 @@ public class MainWindowController implements Initializable , SceneSwitcher {
         rightInaRow.setText(String.valueOf(task.getCorrectAnswersInARow()));
 
         computeQuestionTextSize();
+    }
+
+    private void makeBackgroundTask(){
+        Task<Void> bgTask = new Task<>() {
+            @Override
+            protected Void call() {
+                makeTask();
+
+                return null;
+            }
+
+        };
+
+//        ExecutorService es = Executors.newSingleThreadExecutor();
+
+        Service<Void> service = new Service<>() {
+            @Override
+            protected Task<Void> createTask() {
+                return bgTask;
+            }
+        };
+        service.start();
 
     }
 

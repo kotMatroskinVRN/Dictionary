@@ -35,6 +35,7 @@ public class MainWindow {
         controller = loader.getController();
 
         Sources.init();
+
         TaskBuilder taskBuilder = new TaskBuilder(Sources.getGetters());
         taskBuilder.init();
 

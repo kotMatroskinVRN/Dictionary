@@ -6,6 +6,8 @@ import home.fifteen.dictionary.dictionary.getters.DictionaryGetter;
 import home.fifteen.dictionary.dictionary.Sources;
 import home.fifteen.dictionary.gui.MainWindow;
 import home.fifteen.dictionary.task.TaskBuilder;
+import home.fifteen.dictionary.utils.lastrun.LastRunWriter;
+import home.fifteen.dictionary.utils.lastrun.ObjectOutputStreamWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,6 +63,9 @@ public class ChooserController implements Initializable , SceneSwitcher{
 
         getSelectedSource();
 
+        LastRunWriter lastRunWriter = new ObjectOutputStreamWriter();
+        lastRunWriter.write( taskBuilder.getGetters() );
+
         Node    node = (Node) event.getSource();
         Stage window = (Stage)( node.getScene().getWindow() );
         window.setScene(MainWindow.getInstance().getScene());
@@ -86,9 +91,10 @@ public class ChooserController implements Initializable , SceneSwitcher{
         log.printVerbose(taskBuilder.toString());
     }
 
-
-
-
+    @Override
+    public TaskBuilder getTaskBuilder() {
+        return taskBuilder;
+    }
 
 
     private void readOfflineSources(){

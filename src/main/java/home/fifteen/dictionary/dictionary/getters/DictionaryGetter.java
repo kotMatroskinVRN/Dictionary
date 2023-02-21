@@ -20,9 +20,5 @@ public interface DictionaryGetter extends Serializable {
     boolean isDownloadable();
     void setDownloadable(boolean downloadable);
 
-    default String parseKey(String key){
-        return key.replaceAll("\\." , " ");
-    }
-
 
 }

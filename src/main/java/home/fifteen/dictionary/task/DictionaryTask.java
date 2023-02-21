@@ -6,7 +6,7 @@ import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.util.*;
 
-public class Task {
+public class DictionaryTask {
 
     private final ColorfulLogger log = ColorfulLogger.getLogger();
 
@@ -19,7 +19,7 @@ public class Task {
     private double averageWeight;
 
 
-    public Task(){
+    public DictionaryTask(){
         words = new ArrayList<>();
         answers = new ArrayList<>();
 //        words.clear();

@@ -15,4 +15,6 @@ public interface SceneSwitcher {
 //    void setSecondaryScene(Scene scene);
 //    void setSecondaryController(Initializable controller);
     void setTaskBuilder(TaskBuilder taskBuilder);
+
+    TaskBuilder getTaskBuilder();
 }
