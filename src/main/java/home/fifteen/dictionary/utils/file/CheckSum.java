@@ -12,7 +12,7 @@ public class CheckSum {
     private final File file;
 
     public CheckSum(){
-        file = new File("DictionarySource/encoded_0104.properties");
+        file = new File("DictionarySource/encoded_default.dct");
     }
 
     public CheckSum(File file){
@@ -37,7 +37,7 @@ public class CheckSum {
             while ((bytesCount = fis.read(byteArray)) != -1)
             {
                 digest.update(byteArray, 0, bytesCount);
-            };
+            }
 
             fis.close();
 

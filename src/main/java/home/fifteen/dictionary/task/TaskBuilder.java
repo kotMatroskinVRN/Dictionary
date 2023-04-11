@@ -27,12 +27,12 @@ public class TaskBuilder {
         }
 
 
-        try {
-            LOGGER.printInfo(String.valueOf(Thread.currentThread()));
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            LOGGER.printInfo(String.valueOf(Thread.currentThread()));
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 

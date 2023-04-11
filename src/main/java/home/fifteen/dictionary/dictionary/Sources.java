@@ -7,6 +7,7 @@ import home.fifteen.dictionary.utils.Settings;
 import home.fifteen.dictionary.utils.logger.ColorfulLogger;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -93,14 +94,16 @@ public enum Sources {
 
     private void readSource(){
         for (String line : fileToString().split("\n")){
-            DictionaryGetter getter = getGetter(line);
-            getter.init();
+            if(!line.trim().isEmpty()) {
+                DictionaryGetter getter = getGetter(line);
+                getter.init();
 
 //            File file = new File(line);
 //            if(file.isFile()) {
 //                getter.getDictionary().setName(file.getName());
 //            }
-            getters.add(getter);
+                getters.add(getter);
+            }
         }
 
     }
@@ -124,8 +127,8 @@ public enum Sources {
 
         try(
                 BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(fileName), "UTF-8")
-                );
+                        new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8)
+                )
                 ) {
 
             String line = reader.readLine();
